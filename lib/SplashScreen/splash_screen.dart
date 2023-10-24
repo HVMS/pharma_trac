@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pharma_trac/HomeScreen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
@@ -9,7 +11,31 @@ class SplashScreen extends StatefulWidget{
   State<StatefulWidget> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>{
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+    Future.delayed(const Duration(seconds: 2), (){
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const HomeScreen(),
+        ),
+      );
+    });
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: SystemUiOverlay.values);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
