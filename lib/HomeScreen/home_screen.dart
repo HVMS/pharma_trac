@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../navigationbar_screen.dart';
 
 class HomeScreen extends StatelessWidget{
   const HomeScreen({super.key});
@@ -6,13 +7,8 @@ class HomeScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Hello Viral, How are you?"),
-      ),
-      body: const Center(
-        child: Text("Welcome to the Show!!"),
-      ),
+    return const Scaffold(
+      body: NavigationBarScreen(),
     );
   }
 
