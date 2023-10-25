@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_trac/HomeScreen/home_screen.dart';
+import 'package:pharma_trac/Utils/colors_utils.dart';
+import 'package:pharma_trac/Utils/string_utils.dart';
 
 class SplashScreen extends StatefulWidget{
   const SplashScreen({super.key});
@@ -41,12 +42,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     return Scaffold(
       body: Container(
         width: double.maxFinite,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.lightBlueAccent,
-              Colors.deepPurpleAccent,
+              ColorUtils.primaryColor,
+              ColorUtils.secondaryColor,
             ],
           ),
         ),
@@ -60,13 +61,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Safe guarding Against Adverse Drug Reactions',
+                StringUtils.splashScreenCaption,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.kiwiMaru(
                   fontSize: 19.0,
                   fontWeight: FontWeight.w700,
-                  color: HexColor('#FAF000'),
+                  color: ColorUtils.splashScreenTextColor,
                 ),
               ),
             ),
