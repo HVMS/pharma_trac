@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,10 +68,15 @@ class UserProfileScreen extends StatelessWidget{
                         ),
                       ],
                     ),
-                    const CircleAvatar(
-                      backgroundImage: AssetImage('images/edit_icon.png'),
-                      backgroundColor: Colors.transparent,
-                      radius: 15,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen()));
+                      },
+                      child: const CircleAvatar(
+                        backgroundImage: AssetImage('images/edit_icon.png'),
+                        backgroundColor: Colors.transparent,
+                        radius: 15,
+                      ),
                     ),
                   ],
                 ),
