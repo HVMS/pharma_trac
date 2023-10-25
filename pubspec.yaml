@@ -48,6 +48,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   google_fonts: ^6.1.0
   hexcolor: ^3.0.1
+  flutter_svg: ^2.0.7
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,3 +60,8 @@ flutter:
 
   assets:
     - images/Logo1.png
+    - Icons/user_profile.svg
+    - Icons/vital_sign_icon.svg
+    - Icons/chat_icon.svg
+    - Icons/add_icon.svg
+    - Icons/analytics_icon.svg
