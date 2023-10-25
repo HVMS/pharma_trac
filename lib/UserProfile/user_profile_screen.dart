@@ -19,10 +19,11 @@ class UserProfileScreen extends StatelessWidget{
           ),
           body: Container(
             color: ColorUtils.appBackgroundColor,
-            width: double.infinity,
-            height: double.infinity,
+            width: double.maxFinite,
+            height: double.maxFinite,
             child: Column(
               children: <Widget>[
+                const SizedBox(height: 15),
                 Text(
                   StringUtils.editProfileTitle,
                   style: GoogleFonts.kiwiMaru(
@@ -31,11 +32,13 @@ class UserProfileScreen extends StatelessWidget{
                     color: ColorUtils.black,
                   ),
                 ),
+                const SizedBox(height: 20),
                 Divider(
                   height: 20.0,
                   thickness: 2.0,
                   color: ColorUtils.grey,
                 ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -71,10 +74,68 @@ class UserProfileScreen extends StatelessWidget{
                     ),
                   ],
                 ),
+                const SizedBox(height: 20),
                 Divider(
                   height: 20.0,
                   thickness: 2.0,
                   color: ColorUtils.grey,
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SvgPicture.asset('Icons/password_icon.svg'),
+                      const SizedBox(width: 20),
+                      Text(
+                        StringUtils.userChangePassword,
+                        style: GoogleFonts.kiwiMaru(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w700,
+                          color: ColorUtils.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SvgPicture.asset('Icons/rating_icon.svg'),
+                      const SizedBox(width: 20),
+                      Text(
+                        StringUtils.userRatings,
+                        style: GoogleFonts.kiwiMaru(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w700,
+                          color: ColorUtils.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SvgPicture.asset('Icons/logout_icon.svg'),
+                      const SizedBox(width: 20),
+                      Text(
+                        StringUtils.userLogout,
+                        style: GoogleFonts.kiwiMaru(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w700,
+                          color: ColorUtils.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -82,7 +143,6 @@ class UserProfileScreen extends StatelessWidget{
         ),
     );
   }
-
 }
 
 
