@@ -14,4 +14,9 @@ class ColorUtils{
   // Splash screen text color
   static final Color splashScreenTextColor = HexColor("#FAF000");
 
+  // Common colors
+  static final Color black = HexColor("#000000");
+  static final Color white = HexColor("#FFFFFF");
+  static final Color grey = HexColor("#A4A4A4");
+
 }

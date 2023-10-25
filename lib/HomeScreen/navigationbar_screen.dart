@@ -3,6 +3,8 @@ import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../UserProfile/user_profile_screen.dart';
+
 class NavigationBarScreen extends StatelessWidget {
   const NavigationBarScreen({super.key});
 
@@ -62,10 +64,7 @@ class _NavigationExampleState extends State<NavigationExample> {
           alignment: Alignment.center,
           child: const Text('Page 4'),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 5'),
-        ),
+        const UserProfileScreen(),
       ][currentIndex],
     );
   }
