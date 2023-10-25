@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:pharma_trac/Utils/colors_utils.dart';
+import 'package:pharma_trac/Utils/string_utils.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NavigationBarScreen extends StatelessWidget {
   const NavigationBarScreen({super.key});
@@ -24,38 +26,23 @@ class _NavigationExampleState extends State<NavigationExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor('#DFF0FF'),
+      backgroundColor: ColorUtils.appBackgroundColor,
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
             currentIndex = index;
           });
         },
-        height: 60.0,
-        backgroundColor: HexColor('#FFFFFF'),
+        height: 65.0,
+        backgroundColor: ColorUtils.navBackgroundColor,
         selectedIndex: currentIndex,
-        indicatorColor: HexColor('#579BDA'),
-        destinations: const <Widget>[
-          NavigationDestination(
-              icon: Icon(Icons.analytics),
-              label: 'Analytics'
-          ),
-          NavigationDestination(
-              icon: Icon(Icons.add),
-              label: 'ADR'
-          ),
-          NavigationDestination(
-              icon: Icon(Icons.chat),
-              label: 'Chat'
-          ),
-          NavigationDestination(
-              icon: Icon(Icons.monitor_heart),
-              label: 'Vitals'
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: "Profile",
-          ),
+        indicatorColor: ColorUtils.bottomNavigationItemColor,
+        destinations: <Widget>[
+          NavigationDestination(icon: SvgPicture.asset('Icons/analytics_icon.svg'), label: StringUtils.analytics),
+          NavigationDestination(icon: SvgPicture.asset('Icons/add_icon.svg'), label: StringUtils.adr),
+          NavigationDestination(icon: SvgPicture.asset('Icons/chat_icon.svg'), label: StringUtils.chat),
+          NavigationDestination(icon: SvgPicture.asset('Icons/vital_sign_icon.svg'), label: StringUtils.vitals),
+          NavigationDestination(icon: SvgPicture.asset('Icons/user_profile.svg'), label: StringUtils.profile),
         ],
       ),
       body: <Widget>[
