@@ -59,11 +59,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - images/Logo1.png
-    - Icons/user_profile.svg
-    - Icons/vital_sign_icon.svg
-    - Icons/chat_icon.svg
-    - Icons/add_icon.svg
-    - Icons/analytics_icon.svg
-    - images/man.png
-    - images/edit_icon.png
+    - images/
+    - Icons/
