@@ -18,4 +18,11 @@ class StringUtils{
   static const String userRatings = "Rate PharmaTrac";
   static const String userChangePassword = "Change Password";
 
+  static const String editScreenAppBarTitle = 'Personal Information';
+  static const String name = 'Name';
+  static const String emailAddress = 'Email Address';
+  static const String countryName = 'Country';
+  static const String height = 'Height';
+  static const String weight = 'Weight';
+
 }
