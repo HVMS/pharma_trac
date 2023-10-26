@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Utils/colors_utils.dart';
@@ -52,10 +53,9 @@ class EditProfileScreen extends StatelessWidget{
                       ],
                     ),
                   ),
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('images/arrow_forward.png'),
-                    backgroundColor: Colors.transparent,
-                    radius: 15,
+                  IconButton(
+                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
+                    onPressed: () {  },
                   ),
                 ],
               ),
@@ -91,10 +91,9 @@ class EditProfileScreen extends StatelessWidget{
                       ],
                     ),
                   ),
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('images/arrow_forward.png'),
-                    backgroundColor: Colors.transparent,
-                    radius: 15,
+                  IconButton(
+                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
+                    onPressed: () {  },
                   ),
                 ],
               ),
@@ -130,10 +129,9 @@ class EditProfileScreen extends StatelessWidget{
                       ],
                     ),
                   ),
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('images/arrow_forward.png'),
-                    backgroundColor: Colors.transparent,
-                    radius: 15,
+                  IconButton(
+                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
+                    onPressed: () {  },
                   ),
                 ],
               ),
@@ -169,10 +167,9 @@ class EditProfileScreen extends StatelessWidget{
                       ],
                     ),
                   ),
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('images/arrow_forward.png'),
-                    backgroundColor: Colors.transparent,
-                    radius: 15,
+                  IconButton(
+                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
+                    onPressed: () {  },
                   ),
                 ],
               ),
@@ -208,10 +205,9 @@ class EditProfileScreen extends StatelessWidget{
                       ],
                     ),
                   ),
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('images/arrow_forward.png'),
-                    backgroundColor: Colors.transparent,
-                    radius: 15,
+                  IconButton(
+                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
+                    onPressed: () {  },
                   ),
                 ],
               ),

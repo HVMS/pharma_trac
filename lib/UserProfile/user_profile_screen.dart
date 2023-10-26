@@ -43,10 +43,19 @@ class UserProfileScreen extends StatelessWidget{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage('images/man.png'),
-                      backgroundColor: Colors.transparent,
-                      radius: 75,
+                    // SizedBox(
+                    //   height: 100,
+                    //   width: 100,
+                    //   child: IconButton(
+                    //     icon: SvgPicture.asset('Icons/user_profile1.svg'),
+                    //     color: ColorUtils.signUpButtonColor,
+                    //     onPressed: () {  },
+                    //   ),
+                    // ),
+                    CircleAvatar(
+                      backgroundColor: ColorUtils.grey,
+                      radius: 50,
+                      child: SvgPicture.asset('Icons/user_profile1.svg'),
                     ),
                     Column(
                       children: [
@@ -68,15 +77,9 @@ class UserProfileScreen extends StatelessWidget{
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen()));
-                      },
-                      child: const CircleAvatar(
-                        backgroundImage: AssetImage('images/edit_icon.png'),
-                        backgroundColor: Colors.transparent,
-                        radius: 15,
-                      ),
+                    IconButton(
+                      icon: SvgPicture.asset('Icons/edit_icon.svg'),
+                      onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen())); },
                     ),
                   ],
                 ),
@@ -86,14 +89,15 @@ class UserProfileScreen extends StatelessWidget{
                   thickness: 2.0,
                   color: ColorUtils.grey,
                 ),
-                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SvgPicture.asset('Icons/password_icon.svg'),
-                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: SvgPicture.asset('Icons/password_icon.svg'),
+                        onPressed: () {  },
+                      ),
                       Text(
                         StringUtils.userChangePassword,
                         style: GoogleFonts.kiwiMaru(
@@ -105,14 +109,15 @@ class UserProfileScreen extends StatelessWidget{
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SvgPicture.asset('Icons/rating_icon.svg'),
-                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: SvgPicture.asset('Icons/rating_icon.svg'),
+                        onPressed: () {  },
+                      ),
                       Text(
                         StringUtils.userRatings,
                         style: GoogleFonts.kiwiMaru(
@@ -124,14 +129,15 @@ class UserProfileScreen extends StatelessWidget{
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SvgPicture.asset('Icons/logout_icon.svg'),
-                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: SvgPicture.asset('Icons/logout_icon.svg'),
+                        onPressed: () {  },
+                      ),
                       Text(
                         StringUtils.userLogout,
                         style: GoogleFonts.kiwiMaru(
