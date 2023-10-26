@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/HomeScreen/home_screen.dart';
 import 'package:pharma_trac/LoginAndRegistration/login_screen.dart';
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     Future.delayed(const Duration(seconds: 3), (){
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreen(),
+        MaterialPageRoute(builder: (_) => const LoginScreen(),
         ),
       );
     });
@@ -55,9 +56,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/Logo1.png'),
-              radius: 150,
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 100,
+              child: SvgPicture.asset('Icons/app_logo.svg'),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
