@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/HomeScreen/home_screen.dart';
+import 'package:pharma_trac/LoginAndRegistration/login_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 
@@ -64,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 StringUtils.splashScreenCaption,
                 maxLines: 2,
                 textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.kiwiMaru(
                   fontSize: 19.0,
                   fontWeight: FontWeight.w700,
