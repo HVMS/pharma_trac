@@ -4,10 +4,16 @@ class Assets {
 
   static const String iconsAddIcon = 'Icons/add_icon.svg';
   static const String iconsAnalyticsIcon = 'Icons/analytics_icon.svg';
+  static const String iconsArrowForward = 'Icons/arrow_forward.svg';
   static const String iconsChatIcon = 'Icons/chat_icon.svg';
   static const String iconsEditIcon = 'Icons/edit_icon.svg';
+  static const String iconsLogoutIcon = 'Icons/logout_icon.svg';
+  static const String iconsPasswordIcon = 'Icons/password_icon.svg';
+  static const String iconsRatingIcon = 'Icons/rating_icon.svg';
   static const String iconsUserProfile = 'Icons/user_profile.svg';
+  static const String iconsUserProfile1 = 'Icons/user_profile1.svg';
   static const String iconsVitalSignIcon = 'Icons/vital_sign_icon.svg';
+  static const String imagesArrowForward = 'images/arrow_forward.png';
   static const String imagesEditIcon = 'images/edit_icon.png';
   static const String imagesLogo1 = 'images/Logo1.png';
   static const String imagesMan = 'images/man.png';
