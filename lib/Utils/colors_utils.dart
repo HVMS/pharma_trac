@@ -19,4 +19,10 @@ class ColorUtils{
   static final Color white = HexColor("#FFFFFF");
   static final Color grey = HexColor("#A4A4A4");
 
+  // Login And Register Screen colors
+  static final Color emailAddressTextColor = HexColor("#FCFCFC");
+  static final Color emailAddressTextFieldColor = HexColor("#D9D9D9");
+  static final Color signUpButtonColor = HexColor("#5DB1FF");
+
+
 }
