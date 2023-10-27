@@ -56,10 +56,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            CircleAvatar(
-              backgroundColor: Colors.transparent,
+            const CircleAvatar(
               radius: 100,
-              child: SvgPicture.asset('Icons/app_logo.svg'),
+              backgroundImage: AssetImage('images/Logo1.png'),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

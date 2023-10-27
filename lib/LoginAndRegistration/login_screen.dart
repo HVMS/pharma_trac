@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../Utils/colors_utils.dart';
 
@@ -32,22 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.transparent,
-                      width: 2.0,
-                    ),
-                  ),
-                  child: IconButton(
-                      onPressed: (){},
-                      iconSize: 200,
-                      icon: SvgPicture.asset('Icons/app_logo.svg'),
-                  ),
+                CircleAvatar(
+                  radius: 100,
+                  backgroundImage: AssetImage('images/Logo1.png'),
                 ),
               ],
             ),
