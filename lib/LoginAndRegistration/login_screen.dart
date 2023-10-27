@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../Utils/colors_utils.dart';
 
@@ -21,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Container(
         width: double.maxFinite,
+        height: double.maxFinite,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -156,14 +156,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  StringUtils.registerHereText,
-                  style: GoogleFonts.kiwiMaru(
-                    decoration: TextDecoration.underline,
-                    decorationThickness: 2,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w600,
-                    color: ColorUtils.splashScreenTextColor,
+                GestureDetector(
+                  onTap: () { Navigator.of(context).push(MaterialPageRoute( builder: (context) => const RegisterScreen())); } ,
+                  child: Text(
+                    StringUtils.registerHereText,
+                    style: GoogleFonts.kiwiMaru(
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w600,
+                      color: ColorUtils.splashScreenTextColor,
+                    ),
                   ),
                 ),
               ],
