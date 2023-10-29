@@ -19,7 +19,7 @@ dependencies:
   fluttertoast: ^8.2.2
   double_back_to_close_app: ^2.1.0
   dropdown_button2: ^2.3.9
-  csc_picker: ^0.2.7
+  country_picker: ^2.0.21
 
 dev_dependencies:
   flutter_test:
