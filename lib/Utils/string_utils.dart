@@ -27,6 +27,7 @@ class StringUtils{
   static const String weight = "Weight";
 
   static const String signUp = "SIGN IN";
+  static const String registerText = "Register";
   static const String registerDirectionText = "Don't have any account?";
   static const String registerHereText = "Register here";
 

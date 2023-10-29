@@ -23,6 +23,7 @@ class ColorUtils{
   static final Color emailAddressTextColor = HexColor("#FCFCFC");
   static final Color emailAddressTextFieldColor = HexColor("#D9D9D9");
   static final Color signUpButtonColor = HexColor("#5DB1FF");
+  static final Color registerButtonColor = HexColor("#1F88E9");
 
 
 }
