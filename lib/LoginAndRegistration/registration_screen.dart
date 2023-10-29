@@ -1,4 +1,4 @@
-import 'package:csc_picker/csc_picker.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,11 +26,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? selectedValue;
 
-  String? selectedCountry;
-
   bool doubleBackToExitPressedOnce = false;
 
   String? selectedDate = '';
+
+  final TextEditingController _countryController = TextEditingController();
+  Country? _selectedCountry;
+
+  void _openCountryPicker() {
+    showCountryPicker(
+      context: context,
+      countryListTheme: const CountryListThemeData(
+        bottomSheetHeight: 500,
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.yellowAccent,
+            ),
+          ),
+        ),
+      ),
+      showPhoneCode: false,
+      onSelect: (Country country) {
+        setState(() {
+          _selectedCountry = country;
+          _countryController.text = country.name;
+        });
+      },
+    );
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -121,7 +155,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
                                   decoration: InputDecoration(
                                     fillColor: ColorUtils.white,
@@ -153,7 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
                                   decoration: InputDecoration(
                                     fillColor: ColorUtils.white,
@@ -185,7 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -218,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -252,7 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
                                   decoration: InputDecoration(
                                     fillColor: ColorUtils.white,
@@ -369,9 +403,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
-                                  obscureText: true,
+                                  onTap: _openCountryPicker,
                                   decoration: InputDecoration(
                                     fillColor: ColorUtils.white,
                                     filled: true,
@@ -391,6 +425,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Select your country",
                                   ),
+                                  readOnly: true,
+                                  controller: _countryController,
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(
@@ -402,9 +438,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
-                                  obscureText: true,
                                   decoration: InputDecoration(
                                     fillColor: ColorUtils.white,
                                     filled: true,
@@ -422,8 +457,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                     contentPadding: const EdgeInsets.all(18.0),
                                     hintStyle: TextStyle(color: Colors.grey[600]),
-                                    hintText: "Enter your height",
+                                    hintText: "Enter your height (in Ft)",
                                   ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                                  ],
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(
@@ -435,9 +473,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     color: ColorUtils.emailAddressTextColor,
                                   ),
                                 ),
-                                TextFormField(
+                                TextField(
                                   cursorColor: ColorUtils.black,
-                                  obscureText: true,
                                   decoration: InputDecoration(
                                     fillColor: ColorUtils.white,
                                     filled: true,
@@ -455,8 +492,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                     contentPadding: const EdgeInsets.all(18.0),
                                     hintStyle: TextStyle(color: Colors.grey[600]),
-                                    hintText: "Enter your weight",
+                                    hintText: "Enter your weight (in Kg)",
                                   ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                                  ],
                                 ),
                               ],
                             ),
