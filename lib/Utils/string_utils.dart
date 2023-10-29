@@ -30,4 +30,10 @@ class StringUtils{
   static const String registerDirectionText = "Don't have any account?";
   static const String registerHereText = "Register here";
 
+  // Registration form string utils
+  static const String fullName = "Full Name";
+  static const String confirmPassword = "Confirm Password";
+  static const String birthDate = "Birth Date";
+  static const String gender = "Gender";
+
 }

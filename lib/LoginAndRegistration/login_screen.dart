@@ -94,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         TextFormField(
                           cursorColor: ColorUtils.black,
+                          obscureText: true,
                           decoration: InputDecoration(
                             fillColor: ColorUtils.white,
                             filled: true,
