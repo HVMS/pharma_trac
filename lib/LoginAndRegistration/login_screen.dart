@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
+import 'package:pharma_trac/model/user.model.dart';
 
 import '../Utils/colors_utils.dart';
+import '../model/user_register_response_model.dart';
+import '../services/users_api.dart';
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({super.key});
@@ -13,6 +16,9 @@ class LoginScreen extends StatefulWidget{
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: TextStyle(color: Colors.grey[600]),
                             hintText: "Enter your Email Address",
                           ),
+                          controller: emailController,
                         ),
                         const SizedBox(height: 20.0),
                         Text(
@@ -114,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintStyle: TextStyle(color: Colors.grey[600]),
                             hintText: "Enter your Password",
                           ),
+                          controller: passwordController,
                         ),
                       ],
                     ),
@@ -133,7 +141,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // var userData = {
+                    //   "email_address" : emailController.text,
+                    //   "password" : passwordController.text,
+                    // };
+
+                    UserRegisterRequestModel userRegisterRequestModel = UserRegisterRequestModel(
+                        emailAddress: emailController.text,
+                        password: passwordController.text
+                    );
+
+                    UsersAPI.register(userRegisterRequestModel).then((value) => {
+                      print(value),
+                      print(value.runtimeType),
+                    });
+
+                  },
                   child: Text(
                     StringUtils.signUp,
                     style: GoogleFonts.kiwiMaru(
