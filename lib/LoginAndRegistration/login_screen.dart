@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import '../Utils/colors_utils.dart';
 import '../services/users_api.dart';
+import 'GoogleSignInApi.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -213,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: IconButton(
                         icon: SvgPicture.asset('Icons/google_signin.svg'),
                         onPressed: () {
-                          
+                          googleAuthenticationProvider();
                         }
                       ),
                     ),
@@ -270,5 +271,19 @@ class _LoginScreenState extends State<LoginScreen> {
     final hasNumber = RegExp(r'[0-9]').hasMatch(password);
 
     return hasUppercase && hasLowercase && hasNumber;
+  }
+
+  Future googleAuthenticationProvider() async {
+    var user = await GoogleSignInApi.login();
+
+    if (user == null){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Sign in failed')));
+    }else{
+      print(user.toString());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Sign in Successful, please wait redirecting to Home Page')));
+    }
+
   }
 }
