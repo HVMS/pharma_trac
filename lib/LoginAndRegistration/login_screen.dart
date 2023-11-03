@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:pharma_trac/model/user.model.dart';
+import 'package:http/http.dart' as http;
 
 import '../Utils/colors_utils.dart';
-import '../model/user_register_response_model.dart';
 import '../services/users_api.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -204,6 +206,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      color: ColorUtils.white,
+                      child: IconButton(
+                        icon: SvgPicture.asset('Icons/google_signin.svg'),
+                        onPressed: () {
+                          
+                        }
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -252,8 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final hasUppercase = RegExp(r'[A-Z]').hasMatch(password);
     final hasLowercase = RegExp(r'[a-z]').hasMatch(password);
     final hasNumber = RegExp(r'[0-9]').hasMatch(password);
-    final hasUnderscore = password.contains('_');
 
-    return hasUppercase && hasLowercase && hasNumber && hasUnderscore;
+    return hasUppercase && hasLowercase && hasNumber;
   }
 }
