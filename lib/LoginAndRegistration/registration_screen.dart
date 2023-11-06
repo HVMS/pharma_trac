@@ -3,6 +3,9 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pharma_trac/model/RegisterRequestModel.dart';
+import 'package:pharma_trac/model/user_register_response_model.dart';
+import 'package:pharma_trac/services/users_api.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
@@ -24,14 +27,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'Two-spirit',
   ];
 
-  String? selectedValue;
+  String selectedGender = '';
 
   bool doubleBackToExitPressedOnce = false;
 
-  String? selectedDate = '';
+  String selectedDate = '';
 
   final TextEditingController _countryController = TextEditingController();
   Country? _selectedCountry;
+
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var fullNameController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+  var heightController = TextEditingController();
+  var weightController = TextEditingController();
 
   void _openCountryPicker() {
     showCountryPicker(
@@ -176,6 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Enter your Email Address",
                                   ),
+                                  controller: emailController,
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(
@@ -208,6 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Enter your full name",
                                   ),
+                                  controller: fullNameController,
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(
@@ -241,6 +253,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Enter your password",
                                   ),
+                                  controller: passwordController,
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(
@@ -274,9 +287,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Enter your confirm password",
                                   ),
+                                  controller: confirmPasswordController,
                                 ),
                                 const SizedBox(height: 10.0),
-
                                 Text(
                                   StringUtils.birthDate,
                                   textAlign: TextAlign.center,
@@ -365,14 +378,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     if (value == null) {
                                       return 'Please Select Your Gender.';
                                     }
-                                    return null;
+                                    return value;
                                   },
                                   onChanged: (value) {
                                     //Do something when selected item is changed.
-                                    // print(value);
+                                    selectedGender = value!;
+                                    print(value);
                                   },
                                   onSaved: (value) {
-                                    selectedValue = value.toString();
+                                    selectedGender = value!;
                                   },
                                   buttonStyleData: const ButtonStyleData(
                                     padding: EdgeInsets.only(right: 8),
@@ -459,6 +473,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Enter your height (in Ft)",
                                   ),
+                                  controller: heightController,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(RegExp('[0-9]'))
                                   ],
@@ -494,6 +509,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: TextStyle(color: Colors.grey[600]),
                                     hintText: "Enter your weight (in Kg)",
                                   ),
+                                  controller: weightController,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(RegExp('[0-9]'))
                                   ],
@@ -516,7 +532,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderRadius: BorderRadius.circular(30.0),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            RegisterRequestModel registerRequestModel =
+                                RegisterRequestModel(
+                                    emailAddress: emailController.text,
+                                    password: passwordController.text,
+                                    fullName: fullNameController.text,
+                                    confirmPassword: confirmPasswordController.text,
+                                    birthDate: selectedDate,
+                                    gender: selectedGender,
+                                    country: _countryController.text,
+                                    height: heightController.text,
+                                    weight: weightController.text
+                                );
+                            print(registerRequestModel);
+                            print(registerRequestModel.toJson());
+
+                            String? iId = '';
+                            String? oId = '';
+                            String? message;
+                            UsersAPI.registerFinal(registerRequestModel).then((response) => {
+
+                              if (response != null){
+                                if (response.statusCode == 200){
+                                  if (response.user == null){
+                                    print('something bad!! please do something'),
+                                  }else{
+                                    iId = response.user?.iId as String?,
+                                    oId = response.user?.iId?.oid,
+
+                                    ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(content: Text('Successfully registered!!'))),
+
+                                  }
+                                } else if (response.statusCode == 409){
+                                  message = response.message,
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message!))),
+                                }
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something is bad!! We will resolve it soon'))),
+                              }
+                            });
+                          },
                           child: Text(
                             StringUtils.registerText,
                             style: GoogleFonts.kiwiMaru(
