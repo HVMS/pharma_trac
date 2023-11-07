@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
 import '../Utils/colors_utils.dart';
+import '../customWidgets/CustomGreyDivider.dart';
 
-class EditProfileScreen extends StatelessWidget{
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
+
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreen();
+}
+
+class _EditProfileScreen extends State<EditProfileScreen>{
 
   @override
   Widget build(BuildContext context) {
@@ -21,195 +29,24 @@ class EditProfileScreen extends StatelessWidget{
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Center(
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          StringUtils.name,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                        Text(
-                          StringUtils.userFullName,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {  },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Divider(
-                height: 20.0,
-                thickness: 2.0,
-                color: ColorUtils.grey,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          StringUtils.emailAddress,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                        Text(
-                          StringUtils.userFullName,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Divider(
-                height: 20.0,
-                thickness: 2.0,
-                color: ColorUtils.grey,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          StringUtils.countryName,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                        Text(
-                          StringUtils.userFullName,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Divider(
-                height: 20.0,
-                thickness: 2.0,
-                color: ColorUtils.grey,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          StringUtils.height,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                        Text(
-                          StringUtils.userFullName,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Divider(
-                height: 20.0,
-                thickness: 2.0,
-                color: ColorUtils.grey,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          StringUtils.weight,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                        Text(
-                          StringUtils.userFullName,
-                          style: GoogleFonts.kiwiMaru(
-                            fontSize: 15.0,
-                            color: ColorUtils.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
+              CustomEditProfileRow(title: StringUtils.name, value: StringUtils.userFullName),
+              SizedBox(height: 5),
+              CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.emailAddress, value: StringUtils.userFullName),
+              SizedBox(height: 5),
+              CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.countryName, value: StringUtils.userFullName),
+              SizedBox(height: 5),
+              CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.height, value: StringUtils.userFullName),
+              SizedBox(height: 5),
+              CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.weight, value: StringUtils.userFullName),
             ],
           ),
         ),

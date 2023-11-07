@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../customWidgets/CustomGreyDivider.dart';
 
 class UserProfileScreen extends StatelessWidget{
 
@@ -34,11 +35,7 @@ class UserProfileScreen extends StatelessWidget{
                   ),
                 ),
                 const SizedBox(height: 20),
-                Divider(
-                  height: 20.0,
-                  thickness: 2.0,
-                  color: ColorUtils.grey,
-                ),
+                const CustomGreyDivider(),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -84,11 +81,7 @@ class UserProfileScreen extends StatelessWidget{
                   ],
                 ),
                 const SizedBox(height: 20),
-                Divider(
-                  height: 20.0,
-                  thickness: 2.0,
-                  color: ColorUtils.grey,
-                ),
+                const CustomGreyDivider(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
