@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:pharma_trac/model/user.model.dart';

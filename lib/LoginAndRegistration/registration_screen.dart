@@ -7,8 +7,10 @@ import 'package:pharma_trac/model/RegisterRequestModel.dart';
 import 'package:pharma_trac/services/users_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../HomeScreen/home_screen.dart';
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
+import '../model/user_register_response_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -44,7 +46,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var weightController = TextEditingController();
 
   // Shared Preference to store user Data
-  late final SharedPreferences prefs;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializeSharedPreference();
+  }
+
+  void initializeSharedPreference() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   void _openCountryPicker() {
     showCountryPicker(
@@ -549,33 +562,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     weight: weightController.text
                                 );
 
-                            print(registerRequestModel);
-                            print(registerRequestModel.toJson());
-
-                            String? iId = '';
-                            String? oId = '';
-                            String? message;
+                            String? insertedUserId = '';
                             prefs = await SharedPreferences.getInstance();
                             UsersAPI.registerFinal(registerRequestModel).then((response) => {
 
                               if (response != null){
                                 if (response.statusCode == 200){
-                                  if (response.user == null){
-                                    print('something bad!! please do something'),
-                                  }else{
-                                    iId = response.user?.iId as String?,
-                                    oId = response.user?.iId?.oid,
-
+                                  if (response.user != null){
                                     ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(content: Text('Successfully registered!!'))),
+                                        .showSnackBar(const SnackBar(content: Text("User Already Exists!"))),
+
+                                    insertedUserId = response.user?.insertedId.toString(),
+                                    prefs.setString('userId', insertedUserId!),
+
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (_) => const HomeScreen(),
+                                      ),
+                                    ),
 
                                   }
-                                } else if (response.statusCode == 409){
-                                  message = response.message,
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message!))),
+                                }else{
+                                  ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(content: Text("User Already Exists!"))),
                                 }
-                              }else{
-                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something is bad!! We will resolve it soon'))),
                               }
                             });
                           },
