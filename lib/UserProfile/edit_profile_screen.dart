@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Utils/colors_utils.dart';
 
 class EditProfileScreen extends StatelessWidget{
-
   const EditProfileScreen({super.key});
 
   @override
@@ -93,7 +92,7 @@ class EditProfileScreen extends StatelessWidget{
                   ),
                   IconButton(
                     icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {  },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -131,7 +130,7 @@ class EditProfileScreen extends StatelessWidget{
                   ),
                   IconButton(
                     icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {  },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -169,7 +168,7 @@ class EditProfileScreen extends StatelessWidget{
                   ),
                   IconButton(
                     icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {  },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -207,7 +206,7 @@ class EditProfileScreen extends StatelessWidget{
                   ),
                   IconButton(
                     icon: SvgPicture.asset('Icons/arrow_forward.svg'),
-                    onPressed: () {  },
+                    onPressed: () {},
                   ),
                 ],
               ),

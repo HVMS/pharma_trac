@@ -44,15 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 100,
-                      backgroundImage: AssetImage('images/Logo1.png'),
-                    ),
-                  ],
-                ),
+                SvgPicture.asset('Icons/app_logo.svg'),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

@@ -23,6 +23,8 @@ dependencies:
   google_sign_in: ^6.1.5
   realm: ^1.5.0
   auto_route: ^7.8.4
+  shared_preferences: ^2.2.2
+  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:

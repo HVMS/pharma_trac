@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/model/RegisterRequestModel.dart';
-import 'package:pharma_trac/model/user_register_response_model.dart';
 import 'package:pharma_trac/services/users_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
@@ -42,6 +42,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var confirmPasswordController = TextEditingController();
   var heightController = TextEditingController();
   var weightController = TextEditingController();
+
+  // Shared Preference to store user Data
+  late final SharedPreferences prefs;
 
   void _openCountryPicker() {
     showCountryPicker(
@@ -532,7 +535,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderRadius: BorderRadius.circular(30.0),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             RegisterRequestModel registerRequestModel =
                                 RegisterRequestModel(
                                     emailAddress: emailController.text,
@@ -545,12 +548,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     height: heightController.text,
                                     weight: weightController.text
                                 );
+
                             print(registerRequestModel);
                             print(registerRequestModel.toJson());
 
                             String? iId = '';
                             String? oId = '';
                             String? message;
+                            prefs = await SharedPreferences.getInstance();
                             UsersAPI.registerFinal(registerRequestModel).then((response) => {
 
                               if (response != null){
