@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharma_trac/model/GoogleSignInAPIResponseModel.dart';
 import 'package:pharma_trac/model/RegisterRequestModel.dart';
@@ -59,9 +60,16 @@ class UsersAPI{
         body: jsonEncode(registerRequestModel.toJson()),
       );
 
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200){
+        var data = jsonDecode(response.body);
 
-      return UserRegisterResponseModel.fromJson(jsonResponse);
+        if (data != null){
+          UserRegisterResponseModel userRegisterResponseModel = UserRegisterResponseModel.fromJson(data);
+          return userRegisterResponseModel;
+        }
+      } else {
+        print('Something went wrong');
+      }
 
     } on Exception catch (e) {
       // TODO
