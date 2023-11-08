@@ -9,7 +9,6 @@ class CustomGreyDivider extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Divider(
-      height: 20.0,
       thickness: 2.0,
       color: ColorUtils.grey,
     );
