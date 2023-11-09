@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
+import 'package:pharma_trac/model/UserInformation.dart';
 import '../Utils/colors_utils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+
+  final UserInformationUser userInformation;
+
+  const EditProfileScreen({required this.userInformation, super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreen();
@@ -29,24 +32,21 @@ class _EditProfileScreen extends State<EditProfileScreen>{
           ),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
             children: <Widget>[
-              CustomEditProfileRow(title: StringUtils.name, value: StringUtils.userFullName),
-              SizedBox(height: 5),
-              CustomGreyDivider(),
-              CustomEditProfileRow(title: StringUtils.emailAddress, value: StringUtils.userFullName),
-              SizedBox(height: 5),
-              CustomGreyDivider(),
-              CustomEditProfileRow(title: StringUtils.countryName, value: StringUtils.userFullName),
-              SizedBox(height: 5),
-              CustomGreyDivider(),
-              CustomEditProfileRow(title: StringUtils.height, value: StringUtils.userFullName),
-              SizedBox(height: 5),
-              CustomGreyDivider(),
-              CustomEditProfileRow(title: StringUtils.weight, value: StringUtils.userFullName),
+              CustomEditProfileRow(title: StringUtils.name, value: "${widget.userInformation.fullName}"),
+              const SizedBox(height: 5),
+              const CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.countryName, value: "${widget.userInformation.country}"),
+              const SizedBox(height: 5),
+              const CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.height, value: "${widget.userInformation.height}"),
+              const SizedBox(height: 5),
+              const CustomGreyDivider(),
+              CustomEditProfileRow(title: StringUtils.weight, value: "${widget.userInformation.weight}"),
             ],
           ),
         ),

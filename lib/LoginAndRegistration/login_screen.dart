@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:pharma_trac/model/user.model.dart';
-import 'package:http/http.dart' as http;
 
 import '../Utils/colors_utils.dart';
 import '../services/users_api.dart';

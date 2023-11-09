@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../HomeScreen/home_screen.dart';
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
-import '../model/user_register_response_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -570,7 +569,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if (response.statusCode == 200){
                                   if (response.user != null){
                                     ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(content: Text("User Already Exists!"))),
+                                        .showSnackBar(const SnackBar(content: Text("User Successfully Registered!!"))),
 
                                     insertedUserId = response.user?.insertedId.toString(),
                                     prefs.setString('userId', insertedUserId!),

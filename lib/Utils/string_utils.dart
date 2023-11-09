@@ -39,4 +39,7 @@ class StringUtils{
   static const String birthDate = "Birth Date";
   static const String gender = "Gender";
 
+  // Hive Box String names
+  static const String userDataBox = "userData";
+
 }
