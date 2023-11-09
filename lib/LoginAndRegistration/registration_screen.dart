@@ -35,7 +35,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String selectedDate = '';
 
   final TextEditingController _countryController = TextEditingController();
-  Country? _selectedCountry;
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -84,7 +83,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       showPhoneCode: false,
       onSelect: (Country country) {
         setState(() {
-          _selectedCountry = country;
           _countryController.text = country.name;
         });
       },

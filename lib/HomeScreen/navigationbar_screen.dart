@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharma_trac/model/UserInformation.dart';
 import 'package:pharma_trac/services/users_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../UserProfile/user_profile_screen.dart';
 
@@ -83,7 +83,7 @@ class _NavigationExampleState extends State<NavigationExample> {
           alignment: Alignment.center,
           child: const Text('Page 4'),
         ),
-        UserProfileScreen(userInformation: informationUser),
+        const UserProfileScreen(),
       ][currentIndex],
     );
   }
@@ -92,11 +92,15 @@ class _NavigationExampleState extends State<NavigationExample> {
     try {
       UserInformation userData = await UsersAPI.getUserInformation(userId);
 
-      if (userData != null){
-        if (userData.user != null){
-          informationUser = userData.user!;
-        }
+      var userDataBox = await Hive.openBox(StringUtils.userDataBox);
+
+      UserInformationUser? user = userData.user;
+      if (user != null){
+        user.toJson().forEach((key, value) async {
+          await userDataBox.put(key, value);
+        });
       }
+
     } on Exception catch (e) {
       // TODO
       print(e);

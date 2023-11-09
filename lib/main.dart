@@ -7,8 +7,7 @@ import 'package:pharma_trac/SplashScreen/splash_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  final applicationDocumentDir = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(applicationDocumentDir.path);
+  await Hive.initFlutter();
 
   runApp(
     DevicePreview(
