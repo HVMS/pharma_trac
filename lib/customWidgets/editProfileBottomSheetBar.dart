@@ -8,7 +8,10 @@ import 'CustomGreyDivider.dart';
 
 class EditProfileBottomSheetBar extends StatefulWidget{
 
-  const EditProfileBottomSheetBar({super.key});
+  final String titleValue;
+  final String responseValue;
+
+  const EditProfileBottomSheetBar({super.key, required this.titleValue, required this.responseValue});
 
   @override
   State<StatefulWidget> createState() => _EditProfileBottomSheetBar();
@@ -18,6 +21,13 @@ class EditProfileBottomSheetBar extends StatefulWidget{
 class _EditProfileBottomSheetBar extends State<EditProfileBottomSheetBar>{
 
   final TextEditingController _textController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Set the initial value of the TextField
+    _textController.text = widget.responseValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +51,7 @@ class _EditProfileBottomSheetBar extends State<EditProfileBottomSheetBar>{
                   ),
                   Expanded(
                     child: Center(
-                      child: Text('Update your Email Address',
+                      child: Text("Update your ${widget.titleValue}",
                         style: GoogleFonts.kiwiMaru(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w700,

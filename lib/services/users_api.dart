@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharma_trac/model/GoogleSignInAPIResponseModel.dart';
 import 'package:pharma_trac/model/RegisterRequestModel.dart';
+import 'package:pharma_trac/model/UserInformation.dart';
 import 'package:pharma_trac/model/user.model.dart';
 
 import '../model/user_register_response_model.dart';
@@ -68,11 +69,42 @@ class UsersAPI{
           return userRegisterResponseModel;
         }
       } else {
-        print('Something went wrong');
+        throw Exception('Something went wrong');
       }
 
     } on Exception catch (e) {
       // TODO
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  static Future<UserInformation> getUserInformation(String userId) async {
+    Map<String, String> requestHeaders = {
+      'content-type' : 'application/json',
+    };
+
+    var uriFinal = Uri.parse("${baseURL}user").replace(queryParameters: <String, String>{'id' : userId});
+    print(uriFinal);
+
+    try {
+      final response = await client.get(
+        uriFinal,
+        headers: requestHeaders,
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
+        UserInformation userInformation = UserInformation.fromJson(data);
+        print(userInformation);
+
+        return userInformation;
+      } else {
+        throw Exception('Something went wrong');
+      }
+    } on Exception catch (e) {
+      // Handle exceptions
       debugPrint(e.toString());
       rethrow;
     }

@@ -5,14 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/customWidgets/editProfileBottomSheetBar.dart';
 
 import '../Utils/colors_utils.dart';
-import '../Utils/string_utils.dart';
 
 class CustomEditProfileRow extends StatelessWidget {
   final String title;
   final String value;
 
-  const CustomEditProfileRow(
-      {super.key, required this.title, required this.value});
+  const CustomEditProfileRow({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class CustomEditProfileRow extends StatelessWidget {
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return const EditProfileBottomSheetBar();
+                  return EditProfileBottomSheetBar(titleValue: title, responseValue: value);
                 },
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
