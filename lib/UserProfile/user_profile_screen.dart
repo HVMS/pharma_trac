@@ -19,13 +19,13 @@ class UserProfileScreen extends StatefulWidget{
 
 class _UserProfileScreen extends State<UserProfileScreen>{
 
-  late Box userDataBox;
+  late Box<dynamic> userDataBox;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    userDataBox = Hive.box('userData');
+    userDataBox = Hive.box<dynamic>('userData');
   }
 
   @override

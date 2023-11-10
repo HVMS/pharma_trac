@@ -7,6 +7,7 @@ import 'package:pharma_trac/model/UserInformation.dart';
 import 'package:pharma_trac/services/users_api.dart';
 
 import '../UserProfile/user_profile_screen.dart';
+import '../VitalSigns/vital_signs.dart';
 
 class NavigationBarScreen extends StatelessWidget {
   const NavigationBarScreen({super.key});
@@ -79,10 +80,7 @@ class _NavigationExampleState extends State<NavigationExample> {
           alignment: Alignment.center,
           child: const Text('Page 3'),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 4'),
-        ),
+        const VitalSigns(),
         const UserProfileScreen(),
       ][currentIndex],
     );
@@ -109,7 +107,7 @@ class _NavigationExampleState extends State<NavigationExample> {
   }
 
   getUserIdFromSharedPreference() async {
-    String userId = '654bcc54e7961b0091df46be';
+    String userId = '6548718fd35014483907d86d';
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // String? userId = prefs.getString('userId');
     if (userId != null) {
