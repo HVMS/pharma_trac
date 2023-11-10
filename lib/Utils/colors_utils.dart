@@ -25,5 +25,12 @@ class ColorUtils{
   static final Color signUpButtonColor = HexColor("#5DB1FF");
   static final Color registerButtonColor = HexColor("#1F88E9");
 
+  // Vital Signs color
+  static final Color cardViewColor = HexColor("#E9E9E9");
+  static final Color redColorCardView = HexColor("#F75555");
+  static final Color blueColorCardView = HexColor("#53A4EE");
+  static final Color yellowColorCardView = HexColor("#FEE876");
+  static final Color greenColorCardView = HexColor("#7DDE75");
+
 
 }
