@@ -11,7 +11,8 @@ class CustomEditProfileRow extends StatelessWidget {
   final String title;
   final String value;
 
-  const CustomEditProfileRow({super.key, required this.title, required this.value});
+  const CustomEditProfileRow(
+      {super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +40,16 @@ class CustomEditProfileRow extends StatelessWidget {
           icon: SvgPicture.asset('Icons/arrow_forward.svg'),
           onPressed: () {
             showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return EditProfileBottomSheetBar(titleValue: title, responseValue: value);
-                },
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-                ),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                );
+              context: context,
+              builder: (context) {
+                return EditProfileBottomSheetBar(
+                    titleValue: title, responseValue: value);
+              },
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+            );
           },
         ),
       ],

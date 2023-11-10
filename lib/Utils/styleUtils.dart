@@ -7,7 +7,7 @@ class StyleUtils {
 
   static TextStyle robotoTextStyle() {
     return GoogleFonts.roboto(
-      fontSize: 16.0,
+      fontSize: 15.0,
       fontWeight: FontWeight.w500,
       color: ColorUtils.black,
     );
@@ -23,8 +23,24 @@ class StyleUtils {
 
   static TextStyle robotoLightTextStyle() {
     return GoogleFonts.roboto(
-      fontSize: 16.0,
+      fontSize: 15.0,
       fontWeight: FontWeight.w300,
+      color: ColorUtils.black,
+    );
+  }
+
+  static TextStyle bottomSheetTitleStyle() {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      fontWeight: FontWeight.w500,
+      color: ColorUtils.black,
+    );
+  }
+
+  static TextStyle bottomSheetTextStyle() {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w500,
       color: ColorUtils.black,
     );
   }

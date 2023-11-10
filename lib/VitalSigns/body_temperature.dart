@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
@@ -18,43 +17,52 @@ class _BodyTemperatureState extends State<BodyTemperature> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
-      child: Card(
-        color: ColorUtils.yellowColorCardView,
-        elevation: 5,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SvgPicture.asset('Icons/temperature.svg'),
-                Text(
-                  StringUtils.bodyTemperatureText,
-                  style: StyleUtils.robotoTextStyle(),
-                ),
-              ],
+      child: GestureDetector(
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Tapping Card!!'),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '108',
-                  style: StyleUtils.robotoTextStyle(),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  StringUtils.bodyTemperatureMeasurement,
-                  style: StyleUtils.robotoTextStyle(),
-                ),
-              ],
-            ),
-          ],
+          );
+        },
+        child: Card(
+          color: ColorUtils.yellowColorCardView,
+          elevation: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SvgPicture.asset('Icons/temperature.svg'),
+                  Text(
+                    StringUtils.bodyTemperatureText,
+                    style: StyleUtils.robotoTextStyle(),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '108',
+                    style: StyleUtils.robotoTextStyle(),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    StringUtils.bodyTemperatureMeasurement,
+                    style: StyleUtils.robotoTextStyle(),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-    );;
+    );
   }
 }

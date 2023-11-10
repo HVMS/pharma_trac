@@ -49,5 +49,13 @@ class StringUtils{
   static const String bodyTemperatureMeasurement = "*F";
   static const String bloodCholesterolText = "Blood Cholesterol";
   static const String bloodCholesterolMeasurement = "mg per dl";
+  static const String timeText = "Time";
+  static const String bottomSheetBarBloodSugarText = "Blood Sugar";
+  static const String bottomSheetBarBloodSugarMeasurementText = "mm dl";
+  static const String bottomSheetBarBloodCholesterolText = "Blood Cholesterol";
+  static const String bottomSheetBarBloodCholesterolMeasurementText = "mg dl";
+  static const String bottomSheetBarHeartText = "Heart Rate";
+  static const String bottomSheetBarHeartMeasurementText = "BPM";
+
 
 }
