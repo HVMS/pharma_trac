@@ -41,6 +41,12 @@ class _VitalSignsState extends State<VitalSigns> {
         color: ColorUtils.appBackgroundColor,
         width: double.maxFinite,
         height: double.maxFinite,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Card(
+            color: ColorUtils.white,
+          ),
+        ),
       ),
     );
   }
