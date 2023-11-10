@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pharma_trac/Utils/styleUtils.dart';
 import '../Utils/colors_utils.dart';
+import '../Utils/string_utils.dart';
 
 class BloodPressureSign extends StatefulWidget {
   const BloodPressureSign({super.key});
@@ -17,6 +19,7 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
       padding: const EdgeInsets.all(2.0),
       child: Card(
         color: ColorUtils.redColorCardView,
+        elevation: 5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -25,12 +28,8 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               children: [
                 SvgPicture.asset('Icons/blood-pressure.svg'),
                 Text(
-                  'Blood Pressure',
-                  style: GoogleFonts.roboto(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bloodPressureText,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -39,11 +38,7 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               children: [
                 Text(
                   '20 / 40',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -51,12 +46,8 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'mm per Hg',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bloodPressureMeasurement,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),

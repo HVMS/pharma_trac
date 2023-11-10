@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/customWidgets/editProfileBottomSheetBar.dart';
 
 import '../Utils/colors_utils.dart';
+import '../Utils/styleUtils.dart';
 
 class CustomEditProfileRow extends StatelessWidget {
   final String title;
@@ -25,18 +26,11 @@ class CustomEditProfileRow extends StatelessWidget {
             children: <Widget>[
               Text(
                 title,
-                style: GoogleFonts.kiwiMaru(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w700,
-                  color: ColorUtils.black,
-                ),
+                style: StyleUtils.robotoTextStyle(),
               ),
               Text(
                 value,
-                style: GoogleFonts.kiwiMaru(
-                  fontSize: 15.0,
-                  color: ColorUtils.black,
-                ),
+                style: StyleUtils.robotoLightTextStyle(),
               ),
             ],
           ),

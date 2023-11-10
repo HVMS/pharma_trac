@@ -41,5 +41,13 @@ class StringUtils{
 
   // Hive Box String names
   static const String userDataBox = "userData";
+  static const String bloodPressureText = "Blood Pressure";
+  static const String bloodPressureMeasurement = "mm per Hg";
+  static const String bloodSugarText = "Blood Sugar";
+  static const String bloodSugarMeasurement = "mm per dl";
+  static const String bodyTemperatureText = "Temperature";
+  static const String bodyTemperatureMeasurement = "*F";
+  static const String bloodCholesterolText = "Blood Cholesterol";
+  static const String bloodCholesterolMeasurement = "mg per dl";
 
 }

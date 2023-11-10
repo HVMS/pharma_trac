@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/colors_utils.dart';
+import '../Utils/string_utils.dart';
+import '../Utils/styleUtils.dart';
 
 class BodyTemperature extends StatefulWidget {
   const BodyTemperature({super.key});
@@ -18,6 +20,7 @@ class _BodyTemperatureState extends State<BodyTemperature> {
       padding: const EdgeInsets.all(2.0),
       child: Card(
         color: ColorUtils.yellowColorCardView,
+        elevation: 5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -26,12 +29,8 @@ class _BodyTemperatureState extends State<BodyTemperature> {
               children: [
                 SvgPicture.asset('Icons/temperature.svg'),
                 Text(
-                  'Temperature',
-                  style: GoogleFonts.roboto(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bodyTemperatureText,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -40,11 +39,7 @@ class _BodyTemperatureState extends State<BodyTemperature> {
               children: [
                 Text(
                   '108',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -52,12 +47,8 @@ class _BodyTemperatureState extends State<BodyTemperature> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '*F',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bodyTemperatureMeasurement,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
 import '../Utils/colors_utils.dart';
+import '../Utils/styleUtils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -34,11 +35,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
       appBar: AppBar(
         title: Text(
           StringUtils.editScreenAppBarTitle,
-          style: GoogleFonts.roboto(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w700,
-            color: ColorUtils.white,
-          ),
+          style: StyleUtils.appBarTextStyle(),
         ),
       ),
       body: Padding(

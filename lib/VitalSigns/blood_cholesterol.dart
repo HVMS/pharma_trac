@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Utils/colors_utils.dart';
+import '../Utils/string_utils.dart';
+import '../Utils/styleUtils.dart';
 
 class BloodCholesterol extends StatefulWidget {
   const BloodCholesterol({super.key});
@@ -17,6 +19,7 @@ class _BloodCholesterolState extends State<BloodCholesterol> {
       padding: const EdgeInsets.all(2.0),
       child: Card(
         color: ColorUtils.greenColorCardView,
+        elevation: 5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -25,17 +28,13 @@ class _BloodCholesterolState extends State<BloodCholesterol> {
               children: [
                 SvgPicture.asset('Icons/blood_cholesterol.svg'),
                 Text(
-                  'Blood Cholesterol',
+                  StringUtils.bloodCholesterolText,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
                   textDirection: TextDirection.ltr,
-                  style: GoogleFonts.roboto(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -44,11 +43,7 @@ class _BloodCholesterolState extends State<BloodCholesterol> {
               children: [
                 Text(
                   '20',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -56,12 +51,8 @@ class _BloodCholesterolState extends State<BloodCholesterol> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'mg per dl',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bloodCholesterolMeasurement,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),

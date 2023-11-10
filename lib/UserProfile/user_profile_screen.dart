@@ -6,6 +6,7 @@ import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../Utils/styleUtils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
 
 class UserProfileScreen extends StatefulWidget{
@@ -46,11 +47,7 @@ class _UserProfileScreen extends State<UserProfileScreen>{
               const SizedBox(height: 15),
               Text(
                 StringUtils.editProfileTitle,
-                style: GoogleFonts.kiwiMaru(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w700,
-                  color: ColorUtils.black,
-                ),
+                style: StyleUtils.robotoTextStyle(),
               ),
               const SizedBox(height: 20),
               const CustomGreyDivider(),
@@ -76,19 +73,11 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     children: [
                       Text(
                         userDataBox.get('fullName', defaultValue: ''),
-                        style: GoogleFonts.kiwiMaru(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w700,
-                          color: ColorUtils.black,
-                        ),
+                        style: StyleUtils.robotoTextStyle(),
                       ),
                       Text(
                         userDataBox.get('email_address', defaultValue: ''),
-                        style: GoogleFonts.kiwiMaru(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w700,
-                          color: ColorUtils.black,
-                        ),
+                        style: StyleUtils.robotoTextStyle(),
                       ),
                     ],
                   ),
@@ -114,11 +103,7 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     ),
                     Text(
                       StringUtils.userChangePassword,
-                      style: GoogleFonts.kiwiMaru(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w700,
-                        color: ColorUtils.black,
-                      ),
+                      style: StyleUtils.robotoTextStyle(),
                     ),
                   ],
                 ),
@@ -134,11 +119,7 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     ),
                     Text(
                       StringUtils.userRatings,
-                      style: GoogleFonts.kiwiMaru(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w700,
-                        color: ColorUtils.black,
-                      ),
+                      style: StyleUtils.robotoTextStyle(),
                     ),
                   ],
                 ),
@@ -154,11 +135,7 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     ),
                     Text(
                       StringUtils.userLogout,
-                      style: GoogleFonts.kiwiMaru(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w700,
-                        color: ColorUtils.black,
-                      ),
+                      style: StyleUtils.robotoTextStyle(),
                     ),
                   ],
                 ),

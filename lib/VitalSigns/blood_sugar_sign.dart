@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:pharma_trac/Utils/string_utils.dart';
 
 import '../Utils/colors_utils.dart';
+import '../Utils/styleUtils.dart';
 
 class BloodSugarSign extends StatefulWidget {
   const BloodSugarSign({super.key});
@@ -18,6 +19,7 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
       padding: const EdgeInsets.all(2.0),
       child: Card(
         color: ColorUtils.blueColorCardView,
+        elevation: 5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -26,12 +28,8 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
               children: [
                 SvgPicture.asset('Icons/blood_sugar.svg'),
                 Text(
-                  'Blood Sugar',
-                  style: GoogleFonts.roboto(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bloodSugarText,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -40,11 +38,7 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
               children: [
                 Text(
                   '15',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
@@ -52,12 +46,8 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'mm per dl',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black,
-                  ),
+                  StringUtils.bloodSugarMeasurement,
+                  style: StyleUtils.robotoTextStyle(),
                 ),
               ],
             ),
