@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class TimeUtils {
 
   static String greetingMessage(){
@@ -11,6 +13,11 @@ class TimeUtils {
     } else {
       return "Good Evening,";
     }
+  }
+
+  static String getFormattedDateSimple(int time) {
+    DateFormat newFormat = DateFormat("MMMM dd, yyyy");
+    return newFormat.format(DateTime.fromMillisecondsSinceEpoch(time));
   }
 
 }
