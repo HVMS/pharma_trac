@@ -1,20 +1,28 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/Utils/styleUtils.dart';
-
 import '../../Utils/colors_utils.dart';
 import '../../Utils/string_utils.dart';
+import '../../Utils/timeUtils.dart';
 import '../CustomGreyDivider.dart';
 
 class CustomBottomSheetBarVitalSigns extends StatefulWidget {
   const CustomBottomSheetBarVitalSigns({super.key});
 
   @override
-  State<CustomBottomSheetBarVitalSigns> createState() => _CustomBottomSheetBarVitalSignsState();
+  State<CustomBottomSheetBarVitalSigns> createState() =>
+      _CustomBottomSheetBarVitalSignsState();
 }
 
-class _CustomBottomSheetBarVitalSignsState extends State<CustomBottomSheetBarVitalSigns> {
+class _CustomBottomSheetBarVitalSignsState
+    extends State<CustomBottomSheetBarVitalSigns> {
+  late Future<DateTime?> selectedDate;
+  String date = "-";
+
+  late Future<TimeOfDay?> selectedTime;
+  String time = "-";
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -30,7 +38,8 @@ class _CustomBottomSheetBarVitalSignsState extends State<CustomBottomSheetBarVit
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
-                      child: Text("Update your data",
+                      child: Text(
+                        "Update your data",
                         style: StyleUtils.bottomSheetTitleStyle(),
                       ),
                     ),
@@ -48,20 +57,20 @@ class _CustomBottomSheetBarVitalSignsState extends State<CustomBottomSheetBarVit
                 style: StyleUtils.bottomSheetTextStyle(),
               ),
               GestureDetector(
-                onTap: (){
-
+                onTap: () {
+                  showDialogPicker(context);
                 },
                 child: Text(
-                  StringUtils.timeText,
+                  date,
                   style: StyleUtils.bottomSheetTextStyle(),
                 ),
               ),
               GestureDetector(
-                onTap: (){
-
+                onTap: () {
+                  showDialogTimePicker(context);
                 },
                 child: Text(
-                  StringUtils.timeText,
+                  time,
                   style: StyleUtils.bottomSheetTextStyle(),
                 ),
               ),
@@ -90,7 +99,6 @@ class _CustomBottomSheetBarVitalSignsState extends State<CustomBottomSheetBarVit
           const CustomGreyDivider(),
           Column(
             children: [
-              const CustomGreyDivider(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
@@ -120,5 +128,65 @@ class _CustomBottomSheetBarVitalSignsState extends State<CustomBottomSheetBarVit
         ],
       ),
     );
+  }
+
+  void showDialogPicker(BuildContext context) {
+    selectedDate = showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.light(
+                primary: Theme.of(context).colorScheme.primary,
+                onPrimary: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              ),
+            ),
+            child: child!,
+        );
+      },
+    );
+    selectedDate.then((value) {
+      setState(() {
+        if(value == null) return;
+        date = TimeUtils.getFormattedDateSimple(value.millisecondsSinceEpoch);
+      });
+    }, onError: (error) {
+      print(error);
+    });
+  }
+
+  void showDialogTimePicker(BuildContext context) {
+    selectedTime = showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              // primary: MyColors.primary,
+              primary: Theme.of(context).colorScheme.primary,
+              onPrimary: ColorUtils.white,
+              surface: ColorUtils.white,
+              onSurface: ColorUtils.black,
+            ),
+            //.dialogBackgroundColor:Colors.blue[900],
+          ),
+          child: child!,
+        );
+      },
+    );
+    selectedTime.then((value) {
+      setState(() {
+        if(value == null) return;
+        time = "${value.hour} : ${value.minute}";
+      });
+    }, onError: (error) {
+      print(error);
+    });
   }
 }
