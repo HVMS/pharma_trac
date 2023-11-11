@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/Utils/styleUtils.dart';
-import 'package:pharma_trac/customWidgets/ViralSigns/custom_bottomsheet_bar_vital_sign.dart';
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
-import '../customWidgets/editProfileBottomSheetBar.dart';
+import '../customWidgets/VitalSigns/custom_bottomsheet_bar_vital_sign.dart';
 
 class BloodPressureSign extends StatefulWidget {
   const BloodPressureSign({super.key});
