@@ -24,6 +24,14 @@ class _CustomBottomSheetBarVitalSignsState
   String time = "-";
 
   @override
+  void initState() {
+    super.initState();
+    // Set the default values for date and time
+    date = "Today";
+    time = TimeUtils.getFormattedTimeSimple(DateTime.now().hour, DateTime.now().minute);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 350.0,
@@ -152,8 +160,18 @@ class _CustomBottomSheetBarVitalSignsState
     );
     selectedDate.then((value) {
       setState(() {
-        if(value == null) return;
-        date = TimeUtils.getFormattedDateSimple(value.millisecondsSinceEpoch);
+        if (value == null) return;
+        final now = DateTime.now();
+        final diff = now.difference(value).inDays;
+
+        // Check if the selected date is today, yesterday, or another day
+        if (diff == 0) {
+          date = "Today";
+        } else if (diff == 1) {
+          date = "Yesterday";
+        } else {
+          date = TimeUtils.getFormattedDateSimple(value.millisecondsSinceEpoch);
+        }
       });
     }, onError: (error) {
       print(error);
@@ -174,7 +192,7 @@ class _CustomBottomSheetBarVitalSignsState
               surface: ColorUtils.white,
               onSurface: ColorUtils.black,
             ),
-            //.dialogBackgroundColor:Colors.blue[900],
+            // .dialogBackgroundColor:Colors.blue[900],
           ),
           child: child!,
         );
@@ -183,7 +201,8 @@ class _CustomBottomSheetBarVitalSignsState
     selectedTime.then((value) {
       setState(() {
         if(value == null) return;
-        time = "${value.hour} : ${value.minute}";
+        time = TimeUtils.getFormattedTimeSimple(value.hour, value.minute);
+        print(time);
       });
     }, onError: (error) {
       print(error);

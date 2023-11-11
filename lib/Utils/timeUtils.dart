@@ -20,4 +20,16 @@ class TimeUtils {
     return newFormat.format(DateTime.fromMillisecondsSinceEpoch(time));
   }
 
+  static String getFormattedTimeSimple(int hour, int minute) {
+    // Format the time as "Hour:Minute AM/PM"
+    String period = 'AM';
+    if (hour >= 12) {
+      period = 'PM';
+      if (hour > 12) {
+        hour -= 12;
+      }
+    }
+    return '$hour:${minute.toString().padLeft(2, '0')} $period';
+  }
+
 }
