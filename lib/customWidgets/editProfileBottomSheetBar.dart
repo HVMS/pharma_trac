@@ -1,37 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
+import '../model/update_user_response.dart';
+import '../services/users_api.dart';
 import 'CustomGreyDivider.dart';
 
-class EditProfileBottomSheetBar extends StatefulWidget{
-
+class EditProfileBottomSheetBar extends StatefulWidget {
   final String titleValue;
   final String responseValue;
 
-  const EditProfileBottomSheetBar({super.key, required this.titleValue, required this.responseValue});
+  const EditProfileBottomSheetBar(
+      {super.key, required this.titleValue, required this.responseValue});
 
   @override
   State<StatefulWidget> createState() => _EditProfileBottomSheetBar();
-
 }
 
-class _EditProfileBottomSheetBar extends State<EditProfileBottomSheetBar>{
+class _EditProfileBottomSheetBar extends State<EditProfileBottomSheetBar> {
 
   final TextEditingController _textController = TextEditingController();
+  late Box userDataBox;
 
   @override
   void initState() {
     super.initState();
     // Set the initial value of the TextField
     _textController.text = widget.responseValue;
+    userDataBox = Hive.box('userData');
   }
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
       height: 300.0,
       child: Column(
@@ -51,7 +54,8 @@ class _EditProfileBottomSheetBar extends State<EditProfileBottomSheetBar>{
                   ),
                   Expanded(
                     child: Center(
-                      child: Text("Update your ${widget.titleValue}",
+                      child: Text(
+                        "Update your ${widget.titleValue}",
                         style: GoogleFonts.kiwiMaru(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w700,
@@ -100,7 +104,22 @@ class _EditProfileBottomSheetBar extends State<EditProfileBottomSheetBar>{
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    String userId = userDataBox.get('_id', defaultValue: '');
+                    Map<String, dynamic> updateInfo = { "fullName" : _textController.text };
+
+                    print(userId);
+                    print(updateInfo);
+
+                    try {
+                      UpdateUserResponseUpdatedUser? responseData = await UsersAPI
+                          .updateUserInformation(userId, updateInfo);
+
+                      print(responseData);
+
+                    } catch (e) {
+                      print(e);
+                    }
                     Navigator.pop(context);
                   },
                   child: Text(

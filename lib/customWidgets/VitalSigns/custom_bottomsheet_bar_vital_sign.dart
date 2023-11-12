@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:pharma_trac/Utils/styleUtils.dart';
 import '../../Utils/colors_utils.dart';
 import '../../Utils/string_utils.dart';
@@ -8,7 +8,10 @@ import '../../Utils/timeUtils.dart';
 import '../CustomGreyDivider.dart';
 
 class CustomBottomSheetBarVitalSigns extends StatefulWidget {
-  const CustomBottomSheetBarVitalSigns({super.key});
+  final String? bloodPressureLevel;
+
+  const CustomBottomSheetBarVitalSigns(
+      {super.key, required this.bloodPressureLevel});
 
   @override
   State<CustomBottomSheetBarVitalSigns> createState() =>
@@ -23,18 +26,21 @@ class _CustomBottomSheetBarVitalSignsState
   late Future<TimeOfDay?> selectedTime;
   String time = "-";
 
+  late int _currentValue = 120;
+
   @override
   void initState() {
     super.initState();
     // Set the default values for date and time
     date = "Today";
-    time = TimeUtils.getFormattedTimeSimple(DateTime.now().hour, DateTime.now().minute);
+    time = TimeUtils.getFormattedTimeSimple(
+        DateTime.now().hour, DateTime.now().minute);
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350.0,
+      height: 370.0,
       child: Column(
         children: [
           Column(
@@ -58,28 +64,30 @@ class _CustomBottomSheetBarVitalSignsState
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                StringUtils.timeText,
-                style: StyleUtils.bottomSheetTextStyle(),
-              ),
-              GestureDetector(
-                onTap: () {
-                  showDialogPicker(context);
-                },
-                child: Text(
-                  date,
-                  style: StyleUtils.bottomSheetTextStyle(),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialogPicker(context);
+                  },
+                  child: Text(
+                    date,
+                    style: StyleUtils.bottomSheetTextStyle(),
+                  ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  showDialogTimePicker(context);
-                },
-                child: Text(
-                  time,
-                  style: StyleUtils.bottomSheetTextStyle(),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialogTimePicker(context);
+                  },
+                  child: Text(
+                    time,
+                    style: StyleUtils.bottomSheetTextStyle(),
+                  ),
                 ),
               ),
             ],
@@ -105,15 +113,25 @@ class _CustomBottomSheetBarVitalSignsState
             ],
           ),
           const CustomGreyDivider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              NumberPicker(
+                  minValue: 10,
+                  maxValue: 200,
+                  value: _currentValue,
+                  onChanged: (value) => setState(() => _currentValue = value)),
+            ],
+          ),
           Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(250, 60),
+                    minimumSize: const Size(200, 60),
                     elevation: 2.0,
-                    backgroundColor: ColorUtils.registerButtonColor,
+                    backgroundColor: ColorUtils.blueColorCardView,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -126,7 +144,7 @@ class _CustomBottomSheetBarVitalSignsState
                     style: GoogleFonts.kiwiMaru(
                       fontSize: 25.0,
                       fontWeight: FontWeight.w600,
-                      color: ColorUtils.emailAddressTextColor,
+                      color: ColorUtils.black,
                     ),
                   ),
                 ),
@@ -146,15 +164,15 @@ class _CustomBottomSheetBarVitalSignsState
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget? child) {
         return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.light(
-                primary: Theme.of(context).colorScheme.primary,
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Theme.of(context).colorScheme.primary,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
             ),
-            child: child!,
+          ),
+          child: child!,
         );
       },
     );
@@ -200,7 +218,7 @@ class _CustomBottomSheetBarVitalSignsState
     );
     selectedTime.then((value) {
       setState(() {
-        if(value == null) return;
+        if (value == null) return;
         time = TimeUtils.getFormattedTimeSimple(value.hour, value.minute);
         print(time);
       });

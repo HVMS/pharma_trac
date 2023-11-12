@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/customWidgets/editProfileBottomSheetBar.dart';
 
-import '../Utils/colors_utils.dart';
 import '../Utils/styleUtils.dart';
 
 class CustomEditProfileRow extends StatelessWidget {

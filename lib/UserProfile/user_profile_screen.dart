@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../Utils/styleUtils.dart';

@@ -28,7 +28,9 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               ),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (context) {
-                return const CustomBottomSheetBarVitalSigns();
+                return const CustomBottomSheetBarVitalSigns(
+                  bloodPressureLevel: '',
+                );
               });
         },
         child: Card(

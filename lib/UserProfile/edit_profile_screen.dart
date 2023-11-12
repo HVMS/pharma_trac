@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
-import '../Utils/colors_utils.dart';
 import '../Utils/styleUtils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
 
