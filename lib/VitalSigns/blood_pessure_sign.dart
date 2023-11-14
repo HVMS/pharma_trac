@@ -28,8 +28,10 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               ),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (context) {
-                return const CustomBottomSheetBarVitalSigns(
-                  bloodPressureLevel: '',
+                return CustomBottomSheetBarVitalSigns(
+                  vitalSignText: StringUtils.bloodPressureText,
+                  buttonColor: ColorUtils.redColorCardView,
+                  vitalSignMeasurementText: StringUtils.bloodPressureMeasurement,
                 );
               });
         },
@@ -42,18 +44,6 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // IconButton(
-                  //     onPressed: () {
-                  //       showModalBottomSheet(
-                  //         isScrollControlled: true,
-                  //         useRootNavigator: true,
-                  //         context: context,
-                  //         builder: (context) {
-                  //           return const CustomBottomSheetBarVitalSigns();
-                  //         },
-                  //       );
-                  //     },
-                  //     icon: SvgPicture.asset('Icons/blood-pressure.svg')),
                   SvgPicture.asset('Icons/blood-pressure.svg'),
                   Text(
                     StringUtils.bloodPressureText,

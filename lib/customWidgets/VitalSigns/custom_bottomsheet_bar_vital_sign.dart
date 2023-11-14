@@ -8,10 +8,13 @@ import '../../Utils/timeUtils.dart';
 import '../CustomGreyDivider.dart';
 
 class CustomBottomSheetBarVitalSigns extends StatefulWidget {
-  final String? bloodPressureLevel;
+
+  final String? vitalSignText;
+  final Color? buttonColor;
+  final String? vitalSignMeasurementText;
 
   const CustomBottomSheetBarVitalSigns(
-      {super.key, required this.bloodPressureLevel});
+      {super.key, required this.vitalSignText, required this.buttonColor, this.vitalSignMeasurementText});
 
   @override
   State<CustomBottomSheetBarVitalSigns> createState() =>
@@ -53,7 +56,7 @@ class _CustomBottomSheetBarVitalSignsState
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(
-                        "Update your data",
+                        'Update your ${widget.vitalSignText}',
                         style: StyleUtils.bottomSheetTitleStyle(),
                       ),
                     ),
@@ -99,14 +102,14 @@ class _CustomBottomSheetBarVitalSignsState
               Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: Text(
-                  StringUtils.bottomSheetBarBloodSugarText,
+                  '${widget.vitalSignText}',
                   style: StyleUtils.bottomSheetTextStyle(),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: Text(
-                  StringUtils.bottomSheetBarBloodSugarMeasurementText,
+                  '${widget.vitalSignMeasurementText}',
                   style: StyleUtils.bottomSheetTextStyle(),
                 ),
               ),
@@ -117,10 +120,17 @@ class _CustomBottomSheetBarVitalSignsState
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               NumberPicker(
-                  minValue: 10,
-                  maxValue: 200,
-                  value: _currentValue,
-                  onChanged: (value) => setState(() => _currentValue = value)),
+                minValue: 10,
+                maxValue: 200,
+                value: _currentValue,
+                onChanged: (value) => setState(() => _currentValue = value),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Colors.grey, width: 1.0),
+                    bottom: BorderSide(color: Colors.grey, width: 1.0),
+                  ),
+                ),
+              ),
             ],
           ),
           Column(
@@ -131,12 +141,15 @@ class _CustomBottomSheetBarVitalSignsState
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(200, 60),
                     elevation: 2.0,
-                    backgroundColor: ColorUtils.blueColorCardView,
+                    backgroundColor: widget.buttonColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
                   onPressed: () {
+                    print(_currentValue);
+                    print(time);
+                    print(date);
                     Navigator.pop(context);
                   },
                   child: Text(
@@ -197,9 +210,21 @@ class _CustomBottomSheetBarVitalSignsState
   }
 
   void showDialogTimePicker(BuildContext context) {
+    TimeOfDay initialTime;
+    if (time != null) {
+      List<String> parts = time.split(' ');
+      String amPm = parts[1];
+      int hour = int.parse(parts[0].split(':')[0]);
+      int minute = int.parse(parts[0].split(':')[1]);
+      if (amPm == 'PM' && hour != 12) hour += 12;
+      if (amPm == 'AM' && hour == 12) hour = 0;
+      initialTime = TimeOfDay(hour: hour, minute: minute);
+    } else {
+      initialTime = TimeOfDay.now();
+    }
     selectedTime = showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: initialTime,
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -220,7 +245,6 @@ class _CustomBottomSheetBarVitalSignsState
       setState(() {
         if (value == null) return;
         time = TimeUtils.getFormattedTimeSimple(value.hour, value.minute);
-        print(time);
       });
     }, onError: (error) {
       print(error);

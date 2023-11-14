@@ -31,6 +31,7 @@ class ColorUtils{
   static final Color blueColorCardView = HexColor("#53A4EE");
   static final Color yellowColorCardView = HexColor("#FEE876");
   static final Color greenColorCardView = HexColor("#7DDE75");
+  static final Color heartRateColorCardView = HexColor('#ED1B24');
 
 
 }

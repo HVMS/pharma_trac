@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
 import '../Utils/styleUtils.dart';
+import '../customWidgets/VitalSigns/custom_bottomsheet_bar_vital_sign.dart';
 
 class BloodCholesterol extends StatefulWidget {
   const BloodCholesterol({super.key});
@@ -18,11 +19,21 @@ class _BloodCholesterolState extends State<BloodCholesterol> {
       padding: const EdgeInsets.all(2.0),
       child: GestureDetector(
         onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Tapping Card!!'),
-            ),
-          );
+          showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useRootNavigator: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              builder: (context) {
+                return CustomBottomSheetBarVitalSigns(
+                  vitalSignText: StringUtils.bloodCholesterolText,
+                  buttonColor: ColorUtils.greenColorCardView,
+                  vitalSignMeasurementText: StringUtils.bloodCholesterolMeasurement,
+                );
+              });
         },
         child: Card(
           color: ColorUtils.greenColorCardView,
