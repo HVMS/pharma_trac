@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:pharma_trac/Utils/styleUtils.dart';
 import '../../Utils/colors_utils.dart';
 import '../../Utils/string_utils.dart';
 import '../../Utils/timeUtils.dart';
+import '../../services/vital_signs_api.dart';
 import '../CustomGreyDivider.dart';
 
 class CustomBottomSheetBarVitalSigns extends StatefulWidget {
-
   final String? vitalSignText;
   final Color? buttonColor;
   final String? vitalSignMeasurementText;
 
   const CustomBottomSheetBarVitalSigns(
-      {super.key, required this.vitalSignText, required this.buttonColor, this.vitalSignMeasurementText});
+      {super.key,
+      required this.vitalSignText,
+      required this.buttonColor,
+      this.vitalSignMeasurementText});
 
   @override
   State<CustomBottomSheetBarVitalSigns> createState() =>
@@ -26,15 +31,22 @@ class _CustomBottomSheetBarVitalSignsState
   late Future<DateTime?> selectedDate;
   String date = "-";
 
+  String dateToBeSent = "-";
+
   late Future<TimeOfDay?> selectedTime;
   String time = "-";
 
-  late int _currentValue = 120;
+  late int _vitalSignMeasurementValue = 120;
+  late Box userDataBox;
+
+  String userId = '';
 
   @override
   void initState() {
     super.initState();
     // Set the default values for date and time
+    userDataBox = Hive.box('userData');
+    userId = userDataBox.get("_id", defaultValue: '');
     date = "Today";
     time = TimeUtils.getFormattedTimeSimple(
         DateTime.now().hour, DateTime.now().minute);
@@ -122,8 +134,8 @@ class _CustomBottomSheetBarVitalSignsState
               NumberPicker(
                 minValue: 10,
                 maxValue: 200,
-                value: _currentValue,
-                onChanged: (value) => setState(() => _currentValue = value),
+                value: _vitalSignMeasurementValue,
+                onChanged: (value) => setState(() => _vitalSignMeasurementValue = value),
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(color: Colors.grey, width: 1.0),
@@ -147,10 +159,51 @@ class _CustomBottomSheetBarVitalSignsState
                     ),
                   ),
                   onPressed: () {
-                    print(_currentValue);
+                    print(_vitalSignMeasurementValue);
+                    print(dateToBeSent);
                     print(time);
                     print(date);
-                    Navigator.pop(context);
+
+                    /**
+                     *    Call API now to send vital signs data
+                     * */
+
+                    Map<String, dynamic> vitalSigns = {
+                      "blood_pressure": null,
+                      "pulse_rate": null,
+                      "blood_cholesterol": null,
+                      "blood_sugar": null,
+                      "temperature": null,
+                    };
+
+                    if (widget.vitalSignText == "Blood Sugar"){
+                      vitalSigns['blood_sugar'] = _vitalSignMeasurementValue.toString();
+                    } else if (widget.vitalSignText == "Heart Rate"){
+                      vitalSigns['heart_rate'] = _vitalSignMeasurementValue.toString();
+                    } else if (widget.vitalSignText == "Blood Cholesterol"){
+                      vitalSigns['blood_cholesterol'] = _vitalSignMeasurementValue.toString();
+                    } else if (widget.vitalSignText == "Temperature"){
+                      vitalSigns['temperature'] = _vitalSignMeasurementValue.toString();
+                    }
+
+                    // Add date and time
+                    if (date == "Today") {
+                      vitalSigns["date"] = DateFormat('MMMM d, yyyy').format(DateTime.now()).toString();
+                    } else if (date == "Yesterday") {
+                      vitalSigns["date"] = DateFormat('MMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 1))).toString();
+                    } else {
+                      vitalSigns["date"] = date.toString(); // assuming date is already in 'MMMM d, yyyy' format
+                    }
+
+                    vitalSigns['time'] = time.toString();
+
+                    print(userId);
+                    print(vitalSigns);
+
+                    VitalSignsService.addVitalSings(userId, vitalSigns).then((response) => {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message))),
+                      Navigator.pop(context),
+                    });
                   },
                   child: Text(
                     StringUtils.update,
