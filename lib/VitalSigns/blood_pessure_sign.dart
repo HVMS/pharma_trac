@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharma_trac/Utils/styleUtils.dart';
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
-import '../customWidgets/VitalSigns/custom_bottomsheet_bar_vital_sign.dart';
+import '../customWidgets/VitalSigns/custom_bottomsheet_bar_blood_pressure.dart';
 
 class BloodPressureSign extends StatefulWidget {
   const BloodPressureSign({super.key});
@@ -28,7 +28,7 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
               ),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (context) {
-                return CustomBottomSheetBarVitalSigns(
+                return BloodPressureCustomBottomSheetBar(
                   vitalSignText: StringUtils.bloodPressureText,
                   buttonColor: ColorUtils.redColorCardView,
                   vitalSignMeasurementText: StringUtils.bloodPressureMeasurement,
