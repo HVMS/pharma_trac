@@ -159,51 +159,8 @@ class _CustomBottomSheetBarVitalSignsState
                     ),
                   ),
                   onPressed: () {
-                    print(_vitalSignMeasurementValue);
-                    print(dateToBeSent);
-                    print(time);
-                    print(date);
-
-                    /**
-                     *    Call API now to send vital signs data
-                     * */
-
-                    Map<String, dynamic> vitalSigns = {
-                      "blood_pressure": null,
-                      "pulse_rate": null,
-                      "blood_cholesterol": null,
-                      "blood_sugar": null,
-                      "temperature": null,
-                    };
-
-                    if (widget.vitalSignText == "Blood Sugar"){
-                      vitalSigns['blood_sugar'] = _vitalSignMeasurementValue.toString();
-                    } else if (widget.vitalSignText == "Heart Rate"){
-                      vitalSigns['heart_rate'] = _vitalSignMeasurementValue.toString();
-                    } else if (widget.vitalSignText == "Blood Cholesterol"){
-                      vitalSigns['blood_cholesterol'] = _vitalSignMeasurementValue.toString();
-                    } else if (widget.vitalSignText == "Temperature"){
-                      vitalSigns['temperature'] = _vitalSignMeasurementValue.toString();
-                    }
-
-                    // Add date and time
-                    if (date == "Today") {
-                      vitalSigns["date"] = DateFormat('MMMM d, yyyy').format(DateTime.now()).toString();
-                    } else if (date == "Yesterday") {
-                      vitalSigns["date"] = DateFormat('MMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 1))).toString();
-                    } else {
-                      vitalSigns["date"] = date.toString(); // assuming date is already in 'MMMM d, yyyy' format
-                    }
-
-                    vitalSigns['time'] = time.toString();
-
-                    print(userId);
-                    print(vitalSigns);
-
-                    VitalSignsService.addVitalSings(userId, vitalSigns).then((response) => {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message))),
-                      Navigator.pop(context),
-                    });
+                    // Call API To send data to vital sign database
+                    callAPIToSendBloodPressureData();
                   },
                   child: Text(
                     StringUtils.update,
@@ -301,6 +258,39 @@ class _CustomBottomSheetBarVitalSignsState
       });
     }, onError: (error) {
       print(error);
+    });
+  }
+
+  void callAPIToSendBloodPressureData() {
+    Map<String, dynamic> vitalSigns = {};
+
+    if (widget.vitalSignText == "Blood Sugar"){
+      vitalSigns['blood_sugar'] = _vitalSignMeasurementValue.toString();
+    } else if (widget.vitalSignText == "Heart Rate"){
+      vitalSigns['heart_rate'] = _vitalSignMeasurementValue.toString();
+    } else if (widget.vitalSignText == "Blood Cholesterol"){
+      vitalSigns['blood_cholesterol'] = _vitalSignMeasurementValue.toString();
+    } else if (widget.vitalSignText == "Temperature"){
+      vitalSigns['temperature'] = _vitalSignMeasurementValue.toString();
+    }
+
+    // Add date and time
+    if (date == "Today") {
+      vitalSigns["date"] = DateFormat('MMMM d, yyyy').format(DateTime.now()).toString();
+    } else if (date == "Yesterday") {
+      vitalSigns["date"] = DateFormat('MMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 1))).toString();
+    } else {
+      vitalSigns["date"] = date.toString(); // assuming date is already in 'MMMM d, yyyy' format
+    }
+
+    vitalSigns['time'] = time.toString();
+
+    print(userId);
+    print(vitalSigns);
+
+    VitalSignsService.addVitalSings(userId, vitalSigns).then((response) => {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message))),
+      Navigator.pop(context),
     });
   }
 }
