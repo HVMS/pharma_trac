@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
+import 'package:pharma_trac/model/VitalSign/heart_rate_model.dart';
 
 import '../Utils/colors_utils.dart';
+import '../Utils/extra_utils.dart';
 import '../Utils/string_utils.dart';
 import '../Utils/styleUtils.dart';
 import '../customWidgets/VitalSigns/custom_bottomsheet_bar_vital_sign.dart';
+import '../services/vital_signs_api.dart';
 
 class HeartRateSign extends StatefulWidget {
   const HeartRateSign({super.key});
@@ -15,12 +20,26 @@ class HeartRateSign extends StatefulWidget {
 }
 
 class _HeartRateSignState extends State<HeartRateSign> {
+
+  late Box userDataBox;
+  String userId = '';
+  String heartRateValue = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userDataBox = Hive.box('userData');
+    userId = userDataBox.get("_id", defaultValue: '');
+    getHeartRateDataInitially();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           showModalBottomSheet(
               context: context,
               isScrollControlled: true,
@@ -60,7 +79,7 @@ class _HeartRateSignState extends State<HeartRateSign> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '370',
+                      heartRateValue,
                       style: StyleUtils.robotoTextStyle(),
                     ),
                   ],
@@ -81,4 +100,56 @@ class _HeartRateSignState extends State<HeartRateSign> {
       ),
     );
   }
+
+  void getHeartRateDataInitially() async {
+    print(userId);
+
+    HeartRateModel bloodPressureModelResponse =
+    await VitalSignsService.getHeartRate(userId);
+
+    if (bloodPressureModelResponse.statusCode == 200) {
+      List<HeartRateModelResponse?>? responseData =
+          bloodPressureModelResponse.response;
+
+      // Check if responseData is null
+      if (responseData != null) {
+        // Get current time
+        DateTime now = DateTime.now();
+
+        // Filter the response data
+        List<HeartRateModelResponse?> filteredDataNullable =
+        responseData.where((entry) {
+          // Check if entry is null
+          if (entry != null) {
+            DateFormat format = DateFormat("MMMM d, yyyy h:mm a");
+            DateTime entryDateTime =
+            format.parse("${entry.date} ${entry.time}");
+            return entryDateTime.isBefore(now);
+          } else {
+            return false;
+          }
+        }).toList();
+
+        if (filteredDataNullable.isEmpty) {
+          setState(() {
+            heartRateValue = "--";
+          });
+        } else if (filteredDataNullable != null) {
+          List<dynamic> filteredData = filteredDataNullable
+              .whereType<HeartRateModelResponse>()
+              .toList();
+
+          ExtraUtils.sortData(filteredData);
+          setState(() {
+            heartRateValue = filteredData[0].temperature!;
+          });
+        }
+      }
+    } else {
+      setState(() {
+        heartRateValue = "--";
+      });
+    }
+  }
+
 }

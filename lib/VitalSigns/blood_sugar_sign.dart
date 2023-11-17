@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
+import 'package:pharma_trac/model/VitalSign/blood_sugar_model.dart';
 
 import '../Utils/colors_utils.dart';
+import '../Utils/extra_utils.dart';
 import '../Utils/styleUtils.dart';
 import '../customWidgets/VitalSigns/custom_bottomsheet_bar_vital_sign.dart';
+import '../services/vital_signs_api.dart';
 
 class BloodSugarSign extends StatefulWidget {
   const BloodSugarSign({super.key});
@@ -14,6 +19,20 @@ class BloodSugarSign extends StatefulWidget {
 }
 
 class _BloodSugarSignState extends State<BloodSugarSign> {
+
+  late Box userDataBox;
+  String userId = '';
+  String bloodSugarValue = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userDataBox = Hive.box('userData');
+    userId = userDataBox.get("_id", defaultValue: '');
+    getBloodSugarDataInitially();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +75,7 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '15',
+                    bloodSugarValue,
                     style: StyleUtils.robotoTextStyle(),
                   ),
                 ],
@@ -76,4 +95,56 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
       ),
     );
   }
+
+  void getBloodSugarDataInitially() async {
+    print(userId);
+
+    BloodSugarModel bloodPressureModelResponse =
+    await VitalSignsService.getBloodSugar(userId);
+
+    if (bloodPressureModelResponse.statusCode == 200) {
+      List<BloodSugarModelResponse?>? responseData =
+          bloodPressureModelResponse.response;
+
+      // Check if responseData is null
+      if (responseData != null) {
+        // Get current time
+        DateTime now = DateTime.now();
+
+        // Filter the response data
+        List<BloodSugarModelResponse?> filteredDataNullable =
+        responseData.where((entry) {
+          // Check if entry is null
+          if (entry != null) {
+            DateFormat format = DateFormat("MMMM d, yyyy h:mm a");
+            DateTime entryDateTime =
+            format.parse("${entry.date} ${entry.time}");
+            return entryDateTime.isBefore(now);
+          } else {
+            return false;
+          }
+        }).toList();
+
+        if (filteredDataNullable.isEmpty) {
+          setState(() {
+            bloodSugarValue = "--";
+          });
+        } else if (filteredDataNullable != null) {
+          List<dynamic> filteredData = filteredDataNullable
+              .whereType<BloodSugarModelResponse>()
+              .toList();
+
+          ExtraUtils.sortData(filteredData);
+          setState(() {
+            bloodSugarValue = filteredData[0].bloodSugar!;
+          });
+        }
+      }
+    } else {
+      setState(() {
+        bloodSugarValue = "--";
+      });
+    }
+  }
+
 }
