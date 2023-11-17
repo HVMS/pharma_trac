@@ -3,13 +3,13 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pharma_trac/model/RegisterRequestModel.dart';
 import 'package:pharma_trac/services/users_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../HomeScreen/home_screen.dart';
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
+import '../model/User/RegisterRequestModel.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

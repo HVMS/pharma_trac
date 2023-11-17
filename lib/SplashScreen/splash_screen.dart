@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/HomeScreen/home_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
@@ -54,10 +55,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            const CircleAvatar(
-              radius: 100,
-              backgroundImage: AssetImage('images/Logo1.png'),
-            ),
+            SvgPicture.asset('Icons/logo_final.svg'),
+            // const CircleAvatar(
+            //   radius: 100,
+            //   backgroundImage: AssetImage('Icons/logo_final.svg'),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(

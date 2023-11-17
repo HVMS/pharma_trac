@@ -14,8 +14,11 @@ class Assets {
   static const String iconsEditIcon = 'Icons/edit_icon.svg';
   static const String iconsFacebookSignin = 'Icons/facebook_signin.svg';
   static const String iconsGoogleSignin = 'Icons/google_signin.svg';
-  static const String iconsHeartRate = 'Icons/heart_rate_icon.svg';
+  static const String iconsHeartRate = 'Icons/heart-rate.svg';
+  static const String iconsHeartRateIcon = 'Icons/heart_rate_icon.svg';
   static const String iconsLogSmall = 'Icons/log_small.svg';
+  static const String iconsLogo1Final = 'Icons/logo_1_final.svg';
+  static const String iconsLogoFinal = 'Icons/logo_final.svg';
   static const String iconsLogoutIcon = 'Icons/logout_icon.svg';
   static const String iconsPasswordIcon = 'Icons/password_icon.svg';
   static const String iconsRatingIcon = 'Icons/rating_icon.svg';

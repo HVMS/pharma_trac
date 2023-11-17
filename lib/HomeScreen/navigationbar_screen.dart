@@ -3,11 +3,11 @@ import 'package:hive/hive.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharma_trac/model/UserInformation.dart';
 import 'package:pharma_trac/services/users_api.dart';
 
 import '../UserProfile/user_profile_screen.dart';
 import '../VitalSigns/vital_signs.dart';
+import '../model/User/UserInformation.dart';
 
 class NavigationBarScreen extends StatelessWidget {
   const NavigationBarScreen({super.key});
@@ -107,7 +107,7 @@ class _NavigationExampleState extends State<NavigationExample> {
   }
 
   getUserIdFromSharedPreference() async {
-    String userId = '6548718fd35014483907d86d';
+    String userId = '654bcc54e7961b0091df46be';
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // String? userId = prefs.getString('userId');
     if (userId != null) {
