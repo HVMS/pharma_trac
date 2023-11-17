@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pharma_trac/model/GoogleSignInAPIResponseModel.dart';
-import 'package:pharma_trac/model/RegisterRequestModel.dart';
-import 'package:pharma_trac/model/UserInformation.dart';
-import 'package:pharma_trac/model/update_user_response.dart';
-import 'package:pharma_trac/model/user.model.dart';
-
-import '../model/user_register_response_model.dart';
+import 'package:pharma_trac/model/User/GoogleSignInAPIResponseModel.dart';
+import 'package:pharma_trac/model/User/UserInformation.dart';
+import '../model/User/RegisterRequestModel.dart';
+import '../model/User/update_user_response.dart';
+import '../model/User/user.model.dart';
+import '../model/User/user_register_response_model.dart';
 
 class UsersAPI {
   static const baseURL = "https://pharma-trac-backend-host.onrender.com/";
