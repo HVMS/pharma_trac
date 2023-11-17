@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
@@ -8,6 +6,7 @@ import 'package:pharma_trac/Utils/styleUtils.dart';
 import 'package:pharma_trac/model/VitalSign/blood_pressure_model.dart';
 import 'package:pharma_trac/services/vital_signs_api.dart';
 import '../Utils/colors_utils.dart';
+import '../Utils/extra_utils.dart';
 import '../Utils/string_utils.dart';
 import '../customWidgets/VitalSigns/custom_bottomsheet_bar_blood_pressure.dart';
 
@@ -130,23 +129,14 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
             bloodPressureValue = "--/--";
           });
         } else if (filteredDataNullable != null) {
-          List<BloodPressureModelResponse> filteredData = filteredDataNullable
+          List<dynamic> filteredData = filteredDataNullable
               .whereType<BloodPressureModelResponse>()
               .toList();
 
-          filteredData.sort((a, b) {
-            DateFormat format = DateFormat("MMMM d, yyyy h:mm a");
-            DateTime aDateTime = format.parse("${a.date} ${a.time}");
-            DateTime bDateTime = format.parse("${b.date} ${b.time}");
-            return bDateTime.compareTo(aDateTime);
-          });
-
-          print(filteredData);
-
+          ExtraUtils.sortData(filteredData);
           setState(() {
             bloodPressureValue = filteredData[0].bloodPressure!;
           });
-
         }
       }
     } else {
