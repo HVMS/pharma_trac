@@ -55,7 +55,7 @@ class _CustomBottomSheetBarVitalSignsState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 370.0,
+      height: 380.0,
       child: Column(
         children: [
           Column(
@@ -82,7 +82,7 @@ class _CustomBottomSheetBarVitalSignsState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(5.0),
                 child: GestureDetector(
                   onTap: () {
                     showDialogPicker(context);
@@ -94,7 +94,7 @@ class _CustomBottomSheetBarVitalSignsState
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(5.0),
                 child: GestureDetector(
                   onTap: () {
                     showDialogTimePicker(context);
@@ -112,14 +112,14 @@ class _CustomBottomSheetBarVitalSignsState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Text(
                   '${widget.vitalSignText}',
                   style: StyleUtils.bottomSheetTextStyle(),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Text(
                   '${widget.vitalSignMeasurementText}',
                   style: StyleUtils.bottomSheetTextStyle(),

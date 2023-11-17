@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/VitalSign/blood_pressure_model.dart';
 import '../model/VitalSign/vital_sign_response_model.dart';
 
 class VitalSignsService {
@@ -49,6 +50,32 @@ class VitalSignsService {
       }
     } on Exception catch (e) {
       // TODO
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  static Future<BloodPressureModel> getBloodPressureData(String userId) async {
+    Map<String, String> requestHeaders = {
+      'content-type': 'application/json',
+    };
+
+    var uriFinal = Uri.parse("${baseURL}getBloodPressure").replace(queryParameters: <String, String>{'user_id' : userId});
+    print(uriFinal);
+
+    try {
+      final response = await client.get(
+        uriFinal,
+        headers: requestHeaders,
+      );
+
+      if (response.statusCode == 200) {
+        return BloodPressureModel.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Something went wrong');
+      }
+    } on Exception catch (e) {
+      // Handle exceptions
       debugPrint(e.toString());
       rethrow;
     }

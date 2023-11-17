@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
-import '../model/update_user_response.dart';
+import '../model/User/update_user_response.dart';
 import '../services/users_api.dart';
 import 'CustomGreyDivider.dart';
 
