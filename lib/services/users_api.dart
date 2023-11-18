@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharma_trac/model/User/GoogleSignInAPIResponseModel.dart';
 import 'package:pharma_trac/model/User/UserInformation.dart';
+import 'package:pharma_trac/model/User/login_request_model.dart';
 import '../model/User/RegisterRequestModel.dart';
+import '../model/User/login_user_response.dart';
 import '../model/User/update_user_response.dart';
 import '../model/User/user.model.dart';
 import '../model/User/user_register_response_model.dart';
@@ -14,6 +16,37 @@ class UsersAPI {
   static const baseURL = "https://pharma-trac-backend-host.onrender.com/";
 
   static var client = http.Client();
+
+  static Future<LoginUser> login(String emailAddress, String password) async {
+    Map<String, String> requestHeaders = {
+      'content-type': 'application/json',
+    };
+
+    var urlFinal = Uri.parse("${baseURL}loginRouter");
+
+    LoginRequestModel loginRequestModel =
+        LoginRequestModel(emailAddress: emailAddress, password: password);
+
+    try {
+      var response = await client.post(
+        urlFinal,
+        headers: requestHeaders,
+        body: jsonEncode(loginRequestModel.toJson()),
+      );
+
+      print(response);
+      print(response.body);
+
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      LoginUser loginUserResponse = LoginUser.fromJson(jsonResponse);
+
+      return loginUserResponse;
+    } on Exception catch (e) {
+      // TODO
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
 
   static Future<dynamic> register(UserRegisterRequestModel model) async {
     Map<String, String> requestHeaders = {
@@ -84,7 +117,8 @@ class UsersAPI {
       'content-type': 'application/json',
     };
 
-    var uriFinal = Uri.parse("${baseURL}user").replace(queryParameters: <String, String>{'id' : userId});
+    var uriFinal = Uri.parse("${baseURL}user")
+        .replace(queryParameters: <String, String>{'id': userId});
     print(uriFinal);
 
     try {
@@ -110,7 +144,8 @@ class UsersAPI {
     }
   }
 
-  static Future<dynamic> googleSignInOption(GoogleSignInAPIResponseModel model) async {
+  static Future<dynamic> googleSignInOption(
+      GoogleSignInAPIResponseModel model) async {
     Map<String, String> requestHeaders = {
       'content-type': 'application/json',
     };
@@ -142,7 +177,8 @@ class UsersAPI {
     }
   }
 
-  static Future<UpdateUserResponseUpdatedUser?> updateUserInformation(String _id, Map<String, dynamic> userInformation) async {
+  static Future<UpdateUserResponseUpdatedUser?> updateUserInformation(
+      String _id, Map<String, dynamic> userInformation) async {
     Map<String, String> requestHeaders = {
       'content-type': 'application/json',
     };
@@ -163,10 +199,11 @@ class UsersAPI {
 
         print(data);
 
-        UpdateUserResponse updateUserResponse = UpdateUserResponse.fromJson(data);
+        UpdateUserResponse updateUserResponse =
+            UpdateUserResponse.fromJson(data);
         print(updateUserResponse.updatedUser);
 
-        if (updateUserResponse.updatedUser != null){
+        if (updateUserResponse.updatedUser != null) {
           return updateUserResponse.updatedUser;
         }
 

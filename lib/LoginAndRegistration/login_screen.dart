@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
-
 import '../Utils/colors_utils.dart';
-import '../model/User/user.model.dart';
+import '../model/User/login_user_response.dart';
 import '../services/users_api.dart';
 import 'GoogleSignInApi.dart';
 
@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                SvgPicture.asset('Icons/app_logo.svg'),
+                SvgPicture.asset('Icons/logo_final.svg'),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -157,32 +157,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          UserRegisterRequestModel userRegisterRequestModel =
-                          UserRegisterRequestModel(
-                            emailAddress: emailController.text,
-                            password: passwordController.text,
-                          );
-
-                          UsersAPI.register(userRegisterRequestModel)
-                              .then((response) {
-                            print(response);
-                            print(response.runtimeType);
-                            if (response is String) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Registration failed: $response"),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Registration successful"),
-                                ),
-                              );
-                            }
-                          });
+                          callAPIToLogin();
                         }
                       },
                       child: Text(
@@ -202,11 +179,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       color: ColorUtils.white,
                       child: IconButton(
-                        icon: SvgPicture.asset('Icons/google_signin.svg'),
-                        onPressed: () {
-                          googleAuthenticationProvider();
-                        }
-                      ),
+                          icon: SvgPicture.asset('Icons/google_signin.svg'),
+                          onPressed: () {
+                            googleAuthenticationProvider();
+                          }),
                     ),
                   ],
                 ),
@@ -266,14 +242,54 @@ class _LoginScreenState extends State<LoginScreen> {
   Future googleAuthenticationProvider() async {
     var user = await GoogleSignInApi.login();
 
-    if (user == null){
+    if (user == null) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Sign in failed')));
-    }else{
+    } else {
       print(user.toString());
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Sign in Successful, please wait redirecting to Home Page')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Sign in Successful, please wait redirecting to Home Page')));
     }
+  }
 
+  Future<void> callAPIToLogin() async {
+    LoginUser loginUserResponse = await UsersAPI.login(
+        emailController.text.toString(), passwordController.text.toString());
+
+    String successMessage = "";
+
+    print(loginUserResponse.statusCode);
+
+    if (loginUserResponse.statusCode == 200) {
+      if (loginUserResponse.message != null) {
+        successMessage = loginUserResponse.message.toString();
+      }
+
+      Fluttertoast.showToast(
+        msg: successMessage,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        fontSize: 16.0,
+      );
+
+      // Now store user information
+      if (loginUserResponse.response != null) {
+        LoginUserResponse userInformation = loginUserResponse.response!;
+        print(userInformation.toString());
+      }
+    } else if (loginUserResponse.statusCode == 404) {
+      if (loginUserResponse.message != null) {
+        successMessage = loginUserResponse.message.toString();
+      }
+      Fluttertoast.showToast(
+        msg: successMessage,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        fontSize: 16.0,
+      );
+    }
   }
 }
