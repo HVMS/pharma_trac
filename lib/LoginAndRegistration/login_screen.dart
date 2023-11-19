@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:pharma_trac/HomeScreen/home_screen.dart';
 import 'package:pharma_trac/LoginAndRegistration/registration_screen.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import '../Utils/colors_utils.dart';
@@ -257,27 +259,44 @@ class _LoginScreenState extends State<LoginScreen> {
     LoginUser loginUserResponse = await UsersAPI.login(
         emailController.text.toString(), passwordController.text.toString());
 
-    String successMessage = "";
+    print('Full API response: ${loginUserResponse.toJson()}');
 
-    print(loginUserResponse.statusCode);
+    String successMessage = "";
 
     if (loginUserResponse.statusCode == 200) {
       if (loginUserResponse.message != null) {
         successMessage = loginUserResponse.message.toString();
-      }
 
-      Fluttertoast.showToast(
-        msg: successMessage,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        fontSize: 16.0,
-      );
+        LoginUserResponse? userResponse = loginUserResponse.response;
 
-      // Now store user information
-      if (loginUserResponse.response != null) {
-        LoginUserResponse userInformation = loginUserResponse.response!;
-        print(userInformation.toString());
+        // Now store user information
+        if (userResponse != null) {
+          print("right");
+
+          // Store the userInformation data into Hive
+          late Box box;
+          box = await Hive.openBox('userInformation');
+          box.put('userInformation', userResponse);
+
+          print(userResponse.toString());
+          print("hive data ==> ${box.get('userInformation')}");
+
+          Fluttertoast.showToast(
+            msg: successMessage,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            fontSize: 16.0,
+          );
+
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const HomeScreen(),
+            ),
+          );
+          
+        } else {
+          print("Wrong information entered");
+        }
       }
     } else if (loginUserResponse.statusCode == 404) {
       if (loginUserResponse.message != null) {

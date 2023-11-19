@@ -22,7 +22,7 @@ class UsersAPI {
       'content-type': 'application/json',
     };
 
-    var urlFinal = Uri.parse("${baseURL}loginRouter");
+    var urlFinal = Uri.parse("${baseURL}login");
 
     LoginRequestModel loginRequestModel =
         LoginRequestModel(emailAddress: emailAddress, password: password);
@@ -34,12 +34,14 @@ class UsersAPI {
         body: jsonEncode(loginRequestModel.toJson()),
       );
 
-      print(response);
-      print(response.body);
-
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      LoginUser loginUserResponse = LoginUser.fromJson(jsonResponse);
 
+      print("Json response is : ==>");
+      print(jsonResponse);
+
+      LoginUser loginUserResponse = LoginUser.fromJson(jsonResponse);
+      print("Login User Response ==> ");
+      print(loginUserResponse.response);
       return loginUserResponse;
     } on Exception catch (e) {
       // TODO
