@@ -54,15 +54,6 @@ class _UserProfileScreen extends State<UserProfileScreen>{
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // SizedBox(
-                  //   height: 100,
-                  //   width: 100,
-                  //   child: IconButton(
-                  //     icon: SvgPicture.asset('Icons/user_profile1.svg'),
-                  //     color: ColorUtils.signUpButtonColor,
-                  //     onPressed: () {  },
-                  //   ),
-                  // ),
                   CircleAvatar(
                     backgroundColor: ColorUtils.grey,
                     radius: 50,
@@ -92,57 +83,155 @@ class _UserProfileScreen extends State<UserProfileScreen>{
               const SizedBox(height: 20),
               const CustomGreyDivider(),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    IconButton(
-                      icon: SvgPicture.asset('Icons/password_icon.svg'),
-                      onPressed: () {},
-                    ),
-                    Text(
-                      StringUtils.userChangePassword,
-                      style: StyleUtils.robotoTextStyle(),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SvgPicture.asset('Icons/password_icon.svg'),
+                      const SizedBox(width: 15.0,),
+                      Text(
+                        StringUtils.userChangePassword,
+                        style: StyleUtils.robotoTextStyle(),
+                      ),
+                    ],
+                  ),
+                  onTap: (){
+                    callChangePasswordWidget();
+                  },
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    IconButton(
-                      icon: SvgPicture.asset('Icons/rating_icon.svg'),
-                      onPressed: () {},
-                    ),
-                    Text(
-                      StringUtils.userRatings,
-                      style: StyleUtils.robotoTextStyle(),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SvgPicture.asset('Icons/rating_icon.svg'),
+                      const SizedBox(width: 15.0,),
+                      Text(
+                        StringUtils.userRatings,
+                        style: StyleUtils.robotoTextStyle(),
+                      ),
+                    ],
+                  ),
+                  onTap: (){
+
+                  },
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    IconButton(
-                      icon: SvgPicture.asset('Icons/logout_icon.svg'),
-                      onPressed: () {},
-                    ),
-                    Text(
-                      StringUtils.userLogout,
-                      style: StyleUtils.robotoTextStyle(),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SvgPicture.asset('Icons/logout_icon.svg'),
+                      const SizedBox(width: 15.0,),
+                      Text(
+                        StringUtils.userLogout,
+                        style: StyleUtils.robotoTextStyle(),
+                      ),
+                    ],
+                  ),
+                  onTap: (){
+
+                  },
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void callChangePasswordWidget() {
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController confirmController = TextEditingController();
+    ValueNotifier<bool> hasEightCharacters = ValueNotifier<bool>(false);
+    ValueNotifier<bool> hasDigit = ValueNotifier<bool>(false);
+    ValueNotifier<bool> hasLetter = ValueNotifier<bool>(false);
+    ValueNotifier<bool> passwordsMatch = ValueNotifier<bool>(false);
+    bool passwordVisible = false;
+    bool confirmVisible = false;
+
+    void checkPasswordsMatch() {
+      passwordsMatch.value = passwordController.text == confirmController.text;
+    }
+
+    passwordController.addListener(() {
+      String password = passwordController.text;
+      hasEightCharacters.value = password.length >= 8;
+      hasDigit.value = password.contains(RegExp(r'\d'));
+      hasLetter.value = password.contains(RegExp(r'[a-zA-Z]'));
+      checkPasswordsMatch();
+    });
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                const Text('New password', style: TextStyle(fontSize: 20, color: Colors.black)),
+                const Text('Your passwords must be at least 8 characters long, and contain at least one letter and one digit', textAlign: TextAlign.center),
+                TextField(
+                  controller: passwordController,
+                  obscureText: !passwordVisible,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                TextField(
+                  controller: confirmController,
+                  obscureText: !confirmVisible,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(confirmVisible ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          confirmVisible = !confirmVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                buildValidationRow(hasEightCharacters, 'Has at least 8 characters'),
+                buildValidationRow(hasDigit, 'Has one digit'),
+                buildValidationRow(hasLetter, 'Has one letter'),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildValidationRow(ValueNotifier<bool> validationNotifier, String text) {
+    return ValueListenableBuilder(
+      valueListenable: validationNotifier,
+      builder: (context, isValid, child) {
+        return Row(
+          children: [
+            Icon(isValid ? Icons.check_circle_rounded : Icons.cancel_rounded, color: isValid ? Colors.green : Colors.red),
+            const SizedBox(width: 10),
+            Text(text),
+          ],
+        );
+      },
     );
   }
 }
