@@ -153,6 +153,9 @@ class _UserProfileScreen extends State<UserProfileScreen>{
     ValueNotifier<bool> hasDigit = ValueNotifier<bool>(false);
     ValueNotifier<bool> hasLetter = ValueNotifier<bool>(false);
     ValueNotifier<bool> passwordsMatch = ValueNotifier<bool>(false);
+
+    bool _isPasswordMatched = false;
+
     bool passwordVisible = false;
     bool confirmVisible = false;
 
@@ -182,6 +185,11 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                 TextField(
                   controller: passwordController,
                   obscureText: !passwordVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      _isPasswordMatched = passwordController.text == confirmController.text;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
@@ -197,6 +205,11 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                 TextField(
                   controller: confirmController,
                   obscureText: !confirmVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      _isPasswordMatched = passwordController.text == confirmController.text;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
@@ -212,6 +225,10 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                 buildValidationRow(hasEightCharacters, 'Has at least 8 characters'),
                 buildValidationRow(hasDigit, 'Has one digit'),
                 buildValidationRow(hasLetter, 'Has one letter'),
+                ElevatedButton(
+                  onPressed: _isPasswordMatched ? () {} : null,
+                  child: const Text('Update'),
+                )
               ],
             ),
           );
