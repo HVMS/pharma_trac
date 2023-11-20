@@ -141,7 +141,7 @@ class _HeartRateSignState extends State<HeartRateSign> {
 
           ExtraUtils.sortData(filteredData);
           setState(() {
-            heartRateValue = filteredData[0].temperature!;
+            heartRateValue = filteredData[0].heartRate!;
           });
         }
       }

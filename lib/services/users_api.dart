@@ -219,4 +219,40 @@ class UsersAPI {
       rethrow;
     }
   }
+
+  static Future<String> changePassword(
+      String _id, String password, String confirmPassword) async {
+    Map<String, String> requestHeaders = {
+      'content-type': 'application/json',
+    };
+
+    var uriFinal = Uri.parse("${baseURL}changePassword");
+
+    Map<String, String> body = {
+      "user_id": _id,
+      "password": password,
+      "confirmPassword": confirmPassword,
+    };
+
+    print(body);
+
+    try {
+      final response = await client.patch(
+        uriFinal,
+        headers: requestHeaders,
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data['message'];
+      } else {
+        throw Exception('Something went wrong');
+      }
+    } on Exception catch (e) {
+      // Handle exceptions
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
 }

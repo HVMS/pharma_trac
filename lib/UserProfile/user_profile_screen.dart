@@ -5,6 +5,7 @@ import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pharma_trac/services/users_api.dart';
 
 import '../Utils/styleUtils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
@@ -17,13 +18,15 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreen extends State<UserProfileScreen> {
-  late Box<dynamic> userDataBox;
+  late Box userDataBox;
+  String userId = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    userDataBox = Hive.box<dynamic>('userData');
+    userDataBox = Hive.box('userData');
+    userId = userDataBox.get("_id", defaultValue: '');
   }
 
   @override
@@ -203,7 +206,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                     Text(
                       "New Password",
                       textAlign: TextAlign.start,
-                        style: StyleUtils.changePasswordBottomSheetStyle(),
+                      style: StyleUtils.changePasswordBottomSheetStyle(),
                     ),
                   ],
                 ),
@@ -303,16 +306,18 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                           hasDigit.value &&
                           hasEightCharacters.value &&
                           hasLetter.value
-                      ? () {}
+                      ? () {
+                    callAPIToChangePassword(passwordController.text.toString(), confirmController.text.toString());
+                  }
                       : null,
-                    child: Text(
-                      StringUtils.update,
-                      style: GoogleFonts.kiwiMaru(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.w600,
-                        color: ColorUtils.emailAddressTextColor,
-                      ),
+                  child: Text(
+                    StringUtils.update,
+                    style: GoogleFonts.kiwiMaru(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.w600,
+                      color: ColorUtils.emailAddressTextColor,
                     ),
+                  ),
                 )
               ],
             ),
@@ -337,5 +342,11 @@ class _UserProfileScreen extends State<UserProfileScreen> {
         );
       },
     );
+  }
+
+  void callAPIToChangePassword(String password, String confirmPassword) async {
+    String message = await UsersAPI.changePassword(userId, password, confirmPassword);
+    print(message);
+    Navigator.pop(context);
   }
 }
