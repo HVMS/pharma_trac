@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:pharma_trac/Analytics/blood_sugar_chart.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,10 +69,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 1'),
-        ),
+        const BloodSugarChart(),
         Container(
           alignment: Alignment.center,
           child: const Text('Page 2'),

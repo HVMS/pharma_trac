@@ -99,8 +99,7 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
   void getBloodSugarDataInitially() async {
     print(userId);
 
-    BloodSugarModel bloodPressureModelResponse =
-    await VitalSignsService.getBloodSugar(userId);
+    BloodSugarModel bloodPressureModelResponse = await VitalSignsService.getBloodSugar(userId);
 
     if (bloodPressureModelResponse.statusCode == 200) {
       List<BloodSugarModelResponse?>? responseData =
