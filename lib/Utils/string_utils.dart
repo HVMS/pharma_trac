@@ -32,6 +32,14 @@ class StringUtils{
   static const String registerText = "Register";
   static const String registerDirectionText = "Don't have any account?";
   static const String registerHereText = "Register here";
+  static const String newPasswordText = "New Password";
+  static const String confirmNewPasswordText = "Confirm New Password";
+  static const String passwordHintText = "Your passwords must be at least 8 characters long, and contain at least one letter and one digit";
+  static const String changePasswordHintText = "Enter your password";
+  static const String changeConfirmPasswordHintText = "Enter your confirm password";
+  static const String characterPasswordHint = "Has at least 8 Character?";
+  static const String digitPasswordHint = "Has one digit?";
+  static const String letterPasswordHint = "Has one letter?";
 
   // Registration form string utils
   static const String fullName = "Full Name";

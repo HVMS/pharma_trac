@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
@@ -8,17 +9,14 @@ import 'package:flutter_svg/svg.dart';
 import '../Utils/styleUtils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
 
-class UserProfileScreen extends StatefulWidget{
-
+class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
 
   @override
-  State<StatefulWidget> createState()=> _UserProfileScreen();
-
+  State<StatefulWidget> createState() => _UserProfileScreen();
 }
 
-class _UserProfileScreen extends State<UserProfileScreen>{
-
+class _UserProfileScreen extends State<UserProfileScreen> {
   late Box<dynamic> userDataBox;
 
   @override
@@ -30,7 +28,6 @@ class _UserProfileScreen extends State<UserProfileScreen>{
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: implement build
     return MaterialApp(
       home: Scaffold(
@@ -74,8 +71,10 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                   IconButton(
                     icon: SvgPicture.asset('Icons/edit_icon.svg'),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EditProfileScreen()));
                     },
                   ),
                 ],
@@ -89,14 +88,16 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       SvgPicture.asset('Icons/password_icon.svg'),
-                      const SizedBox(width: 15.0,),
+                      const SizedBox(
+                        width: 15.0,
+                      ),
                       Text(
                         StringUtils.userChangePassword,
                         style: StyleUtils.robotoTextStyle(),
                       ),
                     ],
                   ),
-                  onTap: (){
+                  onTap: () {
                     callChangePasswordWidget();
                   },
                 ),
@@ -108,16 +109,16 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       SvgPicture.asset('Icons/rating_icon.svg'),
-                      const SizedBox(width: 15.0,),
+                      const SizedBox(
+                        width: 15.0,
+                      ),
                       Text(
                         StringUtils.userRatings,
                         style: StyleUtils.robotoTextStyle(),
                       ),
                     ],
                   ),
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                 ),
               ),
               Padding(
@@ -127,16 +128,16 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       SvgPicture.asset('Icons/logout_icon.svg'),
-                      const SizedBox(width: 15.0,),
+                      const SizedBox(
+                        width: 15.0,
+                      ),
                       Text(
                         StringUtils.userLogout,
                         style: StyleUtils.robotoTextStyle(),
                       ),
                     ],
                   ),
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                 ),
               ),
             ],
@@ -177,23 +178,60 @@ class _UserProfileScreen extends State<UserProfileScreen>{
       builder: (context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           return Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
-                const Text('New password', style: TextStyle(fontSize: 20, color: Colors.black)),
-                const Text('Your passwords must be at least 8 characters long, and contain at least one letter and one digit', textAlign: TextAlign.center),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Your passwords must be at least 8 characters long, and contain at least one letter and one digit',
+                        style: StyleUtils.changePasswordBottomSheetStyle(),
+                        softWrap: true,
+                        overflow: TextOverflow.clip,
+                        maxLines: 3,
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "New Password",
+                      textAlign: TextAlign.start,
+                        style: StyleUtils.changePasswordBottomSheetStyle(),
+                    ),
+                  ],
+                ),
                 TextField(
                   controller: passwordController,
                   obscureText: !passwordVisible,
                   onChanged: (value) {
                     setState(() {
-                      _isPasswordMatched = passwordController.text == confirmController.text;
+                      _isPasswordMatched =
+                          passwordController.text == confirmController.text;
                     });
                   },
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: StringUtils.changePasswordHintText,
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
+                      icon: Icon(
+                          passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: passwordVisible ? Colors.black : Colors.black),
                       onPressed: () {
                         setState(() {
                           passwordVisible = !passwordVisible;
@@ -202,18 +240,42 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     ),
                   ),
                 ),
+                const SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Confirm New Password",
+                      textAlign: TextAlign.start,
+                      style: StyleUtils.changePasswordBottomSheetStyle(),
+                    ),
+                  ],
+                ),
                 TextField(
                   controller: confirmController,
                   obscureText: !confirmVisible,
                   onChanged: (value) {
                     setState(() {
-                      _isPasswordMatched = passwordController.text == confirmController.text;
+                      _isPasswordMatched =
+                          passwordController.text == confirmController.text;
                     });
                   },
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: StringUtils.changeConfirmPasswordHintText,
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(confirmVisible ? Icons.visibility : Icons.visibility_off),
+                      icon: Icon(
+                          confirmVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: confirmVisible ? Colors.black : Colors.black),
                       onPressed: () {
                         setState(() {
                           confirmVisible = !confirmVisible;
@@ -222,12 +284,35 @@ class _UserProfileScreen extends State<UserProfileScreen>{
                     ),
                   ),
                 ),
-                buildValidationRow(hasEightCharacters, 'Has at least 8 characters'),
-                buildValidationRow(hasDigit, 'Has one digit'),
-                buildValidationRow(hasLetter, 'Has one letter'),
+                const SizedBox(height: 10.0),
+                buildValidationRow(
+                    hasEightCharacters, StringUtils.characterPasswordHint),
+                buildValidationRow(hasDigit, StringUtils.digitPasswordHint),
+                buildValidationRow(hasLetter, StringUtils.letterPasswordHint),
+                const SizedBox(height: 10.0),
                 ElevatedButton(
-                  onPressed: _isPasswordMatched ? () {} : null,
-                  child: const Text('Update'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(250, 60),
+                    elevation: 2.0,
+                    backgroundColor: ColorUtils.registerButtonColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  onPressed: _isPasswordMatched &&
+                          hasDigit.value &&
+                          hasEightCharacters.value &&
+                          hasLetter.value
+                      ? () {}
+                      : null,
+                    child: Text(
+                      StringUtils.update,
+                      style: GoogleFonts.kiwiMaru(
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.w600,
+                        color: ColorUtils.emailAddressTextColor,
+                      ),
+                    ),
                 )
               ],
             ),
@@ -237,13 +322,15 @@ class _UserProfileScreen extends State<UserProfileScreen>{
     );
   }
 
-  Widget buildValidationRow(ValueNotifier<bool> validationNotifier, String text) {
+  Widget buildValidationRow(
+      ValueNotifier<bool> validationNotifier, String text) {
     return ValueListenableBuilder(
       valueListenable: validationNotifier,
       builder: (context, isValid, child) {
         return Row(
           children: [
-            Icon(isValid ? Icons.check_circle_rounded : Icons.cancel_rounded, color: isValid ? Colors.green : Colors.red),
+            Icon(isValid ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                color: isValid ? Colors.green : Colors.red),
             const SizedBox(width: 10),
             Text(text),
           ],
@@ -252,5 +339,3 @@ class _UserProfileScreen extends State<UserProfileScreen>{
     );
   }
 }
-
-

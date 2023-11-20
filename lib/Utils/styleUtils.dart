@@ -13,6 +13,14 @@ class StyleUtils {
     );
   }
 
+  static TextStyle changePasswordBottomSheetStyle() {
+    return GoogleFonts.roboto(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w500,
+      color: ColorUtils.black,
+    );
+  }
+
   static TextStyle appBarTextStyle() {
     return GoogleFonts.roboto(
       fontSize: 18.0,
