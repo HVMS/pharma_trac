@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:pharma_trac/ADR/adverse_drug_reaction.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -72,10 +73,7 @@ class _NavigationExampleState extends State<NavigationExample> {
           alignment: Alignment.center,
           child: const Text('Page 1'),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
-        ),
+        AdverseDrugReaction(),
         Container(
           alignment: Alignment.center,
           child: const Text('Page 3'),

@@ -33,5 +33,6 @@ class ColorUtils{
   static final Color greenColorCardView = HexColor("#7DDE75");
   static final Color heartRateColorCardView = HexColor('#ED1B24');
 
+  static final Color floatingActionButtonColor = HexColor("#16A085");
 
 }

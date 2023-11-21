@@ -65,5 +65,7 @@ class StringUtils{
   static const String bottomSheetBarHeartText = "Heart Rate";
   static const String bottomSheetBarHeartMeasurementText = "BPM";
 
+  // Adverse Drug Reactions
+  static const String addAdverseDrugReactionOptions = "Add Adverse Drug Reactions";
 
 }

@@ -2,10 +2,12 @@
 class Assets {
   Assets._();
 
+  static const String iconsAddDrugIcon = 'Icons/add_drug_icon.svg';
   static const String iconsAddIcon = 'Icons/add_icon.svg';
   static const String iconsAnalyticsIcon = 'Icons/analytics_icon.svg';
   static const String iconsAppLogo = 'Icons/app_logo.svg';
   static const String iconsArrowForward = 'Icons/arrow_forward.svg';
+  static const String iconsBarcodeIcon = 'Icons/barcode_icon.svg';
   static const String iconsBloodCholesterol = 'Icons/blood_cholesterol.svg';
   static const String iconsBloodPressure = 'Icons/blood-pressure.svg';
   static const String iconsBloodSugar = 'Icons/blood_sugar.svg';
