@@ -128,7 +128,7 @@ class _BloodSugarSignState extends State<BloodSugarSign> {
           setState(() {
             bloodSugarValue = "--";
           });
-        } else if (filteredDataNullable != null) {
+        } else {
           List<dynamic> filteredData = filteredDataNullable
               .whereType<BloodSugarModelResponse>()
               .toList();

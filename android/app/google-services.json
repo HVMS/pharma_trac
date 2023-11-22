@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "182455738254",
+    "project_id": "pharmatrac-abe13",
+    "storage_bucket": "pharmatrac-abe13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182455738254:android:96ec5657f20f523b68cedf",
+        "android_client_info": {
+          "package_name": "pharmatrac.com.example.pharma_trac"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyHSo5PI3VT901iUQqH-fQyv6j1Vx1F4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

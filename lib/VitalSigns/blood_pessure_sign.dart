@@ -128,7 +128,7 @@ class _BloodPressureSignState extends State<BloodPressureSign> {
           setState(() {
             bloodPressureValue = "--/--";
           });
-        } else if (filteredDataNullable != null) {
+        } else {
           List<dynamic> filteredData = filteredDataNullable
               .whereType<BloodPressureModelResponse>()
               .toList();

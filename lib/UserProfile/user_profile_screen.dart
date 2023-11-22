@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
@@ -20,6 +24,9 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreen extends State<UserProfileScreen> {
   late Box userDataBox;
   String userId = "";
+
+  String imageURL = '';
+  bool isUploading = false;
 
   @override
   void initState() {
@@ -54,10 +61,63 @@ class _UserProfileScreen extends State<UserProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: ColorUtils.grey,
-                    radius: 50,
-                    child: SvgPicture.asset('Icons/user_profile1.svg'),
+                  InkWell(
+                    onTap: () async {
+                      print("hello world");
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickImage(
+                          source: ImageSource.gallery);
+
+                      print('${file?.path}');
+
+                      if (file == null) return;
+                      try {
+                        print("Successfully uploaded an image 1 ");
+                        // Upload the image to Firebase Storage
+                        final ref = FirebaseStorage.instance
+                            .ref()
+                            .child('user_images')
+                            .child('userIdImage+$userId');
+
+                        print("Successfully uploaded an image 2");
+                        await ref.putFile(File(file.path));
+
+                        print("Successfully uploaded an image 3");
+
+                        setState(() {
+                          isUploading = true;
+                        });
+
+                        // Get the download URL
+                        final url = await ref.getDownloadURL();
+
+                        setState(() {
+                          imageURL = url;
+                          isUploading = false;
+                        });
+
+                        print("URL is here");
+                        print(imageURL);
+                      } catch (e) {
+                        print("Error is here ==>>");
+                        print(e);
+                      }
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: ColorUtils.grey,
+                          radius: 50,
+                          backgroundImage:
+                              imageURL != '' ? NetworkImage(imageURL) : null,
+                          child: imageURL == ''
+                              ? SvgPicture.asset('Icons/user_profile1.svg')
+                              : null,
+                        ),
+                        if (isUploading) const CircularProgressIndicator(),
+                      ],
+                    ),
                   ),
                   Column(
                     children: [
@@ -307,8 +367,10 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                           hasEightCharacters.value &&
                           hasLetter.value
                       ? () {
-                    callAPIToChangePassword(passwordController.text.toString(), confirmController.text.toString());
-                  }
+                          callAPIToChangePassword(
+                              passwordController.text.toString(),
+                              confirmController.text.toString());
+                        }
                       : null,
                   child: Text(
                     StringUtils.update,
@@ -345,7 +407,8 @@ class _UserProfileScreen extends State<UserProfileScreen> {
   }
 
   void callAPIToChangePassword(String password, String confirmPassword) async {
-    String message = await UsersAPI.changePassword(userId, password, confirmPassword);
+    String message =
+        await UsersAPI.changePassword(userId, password, confirmPassword);
     print(message);
     Navigator.pop(context);
   }

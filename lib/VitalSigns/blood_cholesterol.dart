@@ -125,7 +125,7 @@ class _BloodCholesterolState extends State<BloodCholesterol> {
           setState(() {
             bloodCholesterolValue = "--";
           });
-        } else if (filteredDataNullable != null) {
+        } else {
           List<dynamic> filteredData = filteredDataNullable
               .whereType<BloodCholesterolModelResponse>()
               .toList();

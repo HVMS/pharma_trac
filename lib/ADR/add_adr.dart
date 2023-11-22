@@ -32,10 +32,11 @@ class _AddAdverseDrugReactionsState extends State<AddAdverseDrugReactions> {
                 Card(
                   elevation: 5.0,
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.14,
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "ADR By Drug Name",
@@ -51,10 +52,11 @@ class _AddAdverseDrugReactionsState extends State<AddAdverseDrugReactions> {
                 Card(
                   elevation: 5.0,
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.14,
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "ADR By Barcode",

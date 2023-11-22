@@ -56,8 +56,7 @@ class _AdverseDrugReactionState extends State<AdverseDrugReaction> {
         IconButton(
           icon: const Icon(Icons.clear, color: Colors.white),
           onPressed: () {
-            if (_searchQueryController == null ||
-                _searchQueryController.text.isEmpty) {
+            if (_searchQueryController.text.isEmpty) {
               Navigator.pop(context);
               return;
             }

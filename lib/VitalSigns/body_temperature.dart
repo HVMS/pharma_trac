@@ -129,7 +129,7 @@ class _BodyTemperatureState extends State<BodyTemperature> {
           setState(() {
             bodyTemperatureValue = "--";
           });
-        } else if (filteredDataNullable != null) {
+        } else {
           List<dynamic> filteredData = filteredDataNullable
               .whereType<BodyTemperatureModelResponse>()
               .toList();
