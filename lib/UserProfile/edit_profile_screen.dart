@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
 import '../Utils/styleUtils.dart';
@@ -22,6 +23,15 @@ class _EditProfileScreen extends State<EditProfileScreen> {
     // TODO: implement initState
     super.initState();
     userDataBox = Hive.box('userData');
+
+    // String dateString = "November 15, 2023";
+    // DateFormat dateFormat = DateFormat("MMMM d, yyyy");
+    // DateTime dateTime = dateFormat.parse(dateString);
+    // print("date time object is here ==>");
+    // print(dateTime);
+    //
+    // print(DateFormat("EEEE").format(dateTime));
+
   }
 
   @override

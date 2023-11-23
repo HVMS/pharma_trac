@@ -64,44 +64,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                   InkWell(
                     onTap: () async {
                       print("hello world");
-                      ImagePicker imagePicker = ImagePicker();
-                      XFile? file = await imagePicker.pickImage(
-                          source: ImageSource.gallery);
-
-                      print('${file?.path}');
-
-                      if (file == null) return;
-                      try {
-                        print("Successfully uploaded an image 1 ");
-                        // Upload the image to Firebase Storage
-                        final ref = FirebaseStorage.instance
-                            .ref()
-                            .child('user_images')
-                            .child('userIdImage+$userId');
-
-                        print("Successfully uploaded an image 2");
-                        await ref.putFile(File(file.path));
-
-                        print("Successfully uploaded an image 3");
-
-                        setState(() {
-                          isUploading = true;
-                        });
-
-                        // Get the download URL
-                        final url = await ref.getDownloadURL();
-
-                        setState(() {
-                          imageURL = url;
-                          isUploading = false;
-                        });
-
-                        print("URL is here");
-                        print(imageURL);
-                      } catch (e) {
-                        print("Error is here ==>>");
-                        print(e);
-                      }
+                      callImageUploadFunction();
                     },
                     child: Stack(
                       alignment: Alignment.center,
@@ -411,5 +374,46 @@ class _UserProfileScreen extends State<UserProfileScreen> {
         await UsersAPI.changePassword(userId, password, confirmPassword);
     print(message);
     Navigator.pop(context);
+  }
+
+  void callImageUploadFunction() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(
+        source: ImageSource.gallery);
+
+    print('${file?.path}');
+
+    if (file == null) return;
+    try {
+      print("Successfully uploaded an image 1 ");
+      // Upload the image to Firebase Storage
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child('userIdImage+$userId');
+
+      print("Successfully uploaded an image 2");
+      await ref.putFile(File(file.path));
+
+      print("Successfully uploaded an image 3");
+
+      setState(() {
+        isUploading = true;
+      });
+
+      // Get the download URL
+      final url = await ref.getDownloadURL();
+
+      setState(() {
+        imageURL = url;
+        isUploading = false;
+      });
+
+      print("URL is here");
+      print(imageURL);
+    } catch (e) {
+      print("Error is here ==>>");
+      print(e);
+    }
   }
 }

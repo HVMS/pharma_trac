@@ -146,4 +146,11 @@ class _BodyTemperatureState extends State<BodyTemperature> {
       });
     }
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    bodyTemperatureValue = '-';
+    super.dispose();
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:pharma_trac/ADR/adverse_drug_reaction.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
@@ -8,6 +9,7 @@ import 'package:pharma_trac/services/users_api.dart';
 
 import '../UserProfile/user_profile_screen.dart';
 import '../VitalSigns/vital_signs.dart';
+import '../graph.dart';
 import '../model/User/UserInformation.dart';
 
 class NavigationBarScreen extends StatelessWidget {
@@ -69,11 +71,12 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 1'),
-        ),
-        AdverseDrugReaction(),
+        // Container(
+        //   alignment: Alignment.center,
+        //   child: const Text('Page 1'),
+        // ),
+        const Graph(),
+        const AdverseDrugReaction(),
         Container(
           alignment: Alignment.center,
           child: const Text('Page 3'),
