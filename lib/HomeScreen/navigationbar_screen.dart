@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 import 'package:pharma_trac/ADR/adverse_drug_reaction.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
@@ -32,6 +31,8 @@ class NavigationExample extends StatefulWidget {
 class _NavigationExampleState extends State<NavigationExample> {
   int currentIndex = 0;
 
+  late Box userDataBox;
+
   late UserInformationUser informationUser;
 
   @override
@@ -39,7 +40,7 @@ class _NavigationExampleState extends State<NavigationExample> {
     // TODO: implement initState
     super.initState();
     informationUser = UserInformationUser();
-    getUserIdFromSharedPreference().then((userId) {
+    getUserIdFromHiveUserDataBox().then((userId) {
       print(userId);
       callApiToGetUserInformation(userId);
     }).catchError((error) {
@@ -71,10 +72,6 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body: <Widget>[
-        // Container(
-        //   alignment: Alignment.center,
-        //   child: const Text('Page 1'),
-        // ),
         const Graph(),
         const AdverseDrugReaction(),
         Container(
@@ -107,17 +104,9 @@ class _NavigationExampleState extends State<NavigationExample> {
     }
   }
 
-  getUserIdFromSharedPreference() async {
-    String userId = '6548718fd35014483907d86d';
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String? userId = prefs.getString('userId');
-    if (userId != null) {
-      return userId;
-    } else {
-      // You should handle the case where 'userId' is not found in SharedPreferences.
-      // You can return a default value or handle it according to your requirements.
-      // For example, you can throw an exception if 'userId' is not found.
-      throw Exception("userId not found in SharedPreferences");
-    }
+  getUserIdFromHiveUserDataBox() async {
+    userDataBox = Hive.box('userDataBox');
+    String userId = userDataBox.get('_id', defaultValue: '');
+    return userId;
   }
 }

@@ -249,9 +249,30 @@ class _LoginScreenState extends State<LoginScreen> {
           .showSnackBar(const SnackBar(content: Text('Sign in failed')));
     } else {
       print(user.toString());
+
+      // my user response is like this
+      //{
+      //  displayName: Viral Siddhapura Mukundbhai, email: viralsid2330@gmail.com,id: 112204835519975761927,
+      //  photoUrl: https://lh3.googleusercontent.com/a/ACg8ocI2s3sRNQgpBqZtVN3ds3YEdMzxHio1wtfK0OxD78NY81Q, serverAuthCode: null
+      //}
+
+      // Now store user information
+      late Box box;
+      box = await Hive.openBox('userData');
+      box.put('email_address', user.email.toString());
+      box.put('fullName', user.displayName.toString());
+      box.put('_id', user.id.toString());
+      box.put('photoUrl', user.photoUrl.toString());
+
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
               'Sign in Successful, please wait redirecting to Home Page')));
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
+      );
     }
   }
 
@@ -290,10 +311,10 @@ class _LoginScreenState extends State<LoginScreen> {
           );
 
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const HomeScreen(),
+            MaterialPageRoute(
+              builder: (_) => const HomeScreen(),
             ),
           );
-          
         } else {
           print("Wrong information entered");
         }

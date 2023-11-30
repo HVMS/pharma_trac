@@ -2,32 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:pharma_trac/HomeScreen/home_screen.dart';
+import 'package:pharma_trac/LoginAndRegistration/GoogleSignInApi.dart';
+import 'package:pharma_trac/LoginAndRegistration/login_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 
-class SplashScreen extends StatefulWidget{
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+
+  late Box userDataBox;
+
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-    Future.delayed(const Duration(seconds: 3), (){
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreen(),
-        ),
-      );
-    });
-
+    var bool = checkWhetherUserIsLoggedInOrNot();
+    if (bool){
+      print('true');
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+      });
+    }else{
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+      });
+      print('False');
+    }
+    super.initState();
   }
 
   @override
@@ -74,5 +89,17 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         ),
       ),
     );
+  }
+
+  bool checkWhetherUserIsLoggedInOrNot() {
+    // TODO: implement checkWhetherUserIsLoggedInOrNot
+    userDataBox = Hive.box('userData');
+    print(userDataBox);
+    String _emailAddress = userDataBox.get('email_address', defaultValue: '');
+    print(_emailAddress);
+    if (_emailAddress != null && _emailAddress.isNotEmpty){
+      return true;
+    }
+    return false;
   }
 }

@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pharma_trac/LoginAndRegistration/GoogleSignInApi.dart';
+import 'package:pharma_trac/LoginAndRegistration/login_screen.dart';
 import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
@@ -28,12 +31,15 @@ class _UserProfileScreen extends State<UserProfileScreen> {
   String imageURL = '';
   bool isUploading = false;
 
+  bool _isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     userDataBox = Hive.box('userData');
     userId = userDataBox.get("_id", defaultValue: '');
+    imageURL = userDataBox.get('photoUrl', defaultValue: '');
   }
 
   @override
@@ -163,7 +169,9 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                       ),
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    callSignOut();
+                  },
                 ),
               ),
             ],
@@ -378,8 +386,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
 
   void callImageUploadFunction() async {
     ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(
-        source: ImageSource.gallery);
+    XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
 
     print('${file?.path}');
 
@@ -414,6 +421,38 @@ class _UserProfileScreen extends State<UserProfileScreen> {
     } catch (e) {
       print("Error is here ==>>");
       print(e);
+    }
+  }
+
+  Future<void> callSignOut() async {
+    var currentGoogleSignInUser = GoogleSignInApi.currentUser();
+    print(currentGoogleSignInUser);
+    if (currentGoogleSignInUser != null || (userId.isNotEmpty && userId!=null)) {
+      print(currentGoogleSignInUser?.email);
+      print(currentGoogleSignInUser?.photoUrl);
+      print(currentGoogleSignInUser?.displayName);
+      print(currentGoogleSignInUser?.id);
+
+      // First clear the user Data box
+      userDataBox.clear();
+
+      await GoogleSignInApi.signOut();
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const LoginScreen(),
+        ),
+      );
+
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(
+      //       builder: (_) => const LoginScreen(),
+      //     ),
+      //   );
+      // });
+    } else{
+      print("Sign out failed");
     }
   }
 }

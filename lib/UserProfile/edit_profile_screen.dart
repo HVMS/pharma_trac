@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
 import '../Utils/styleUtils.dart';
