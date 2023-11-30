@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Graph extends StatefulWidget {
   const Graph({super.key});
@@ -11,7 +12,7 @@ class Graph extends StatefulWidget {
 class _GraphState extends State<Graph> {
   late List<Map<String, String>> data = [
     {"blood_sugar": "180", "date": "November 16, 2023", "time": "1:11"},
-    {"blood_sugar": "140", "date": "November 16, 2023", "time": "2:17"},
+    {"blood_sugar": "140", "date": "November 16, 2023", "time": "2:45"},
     {"blood_sugar": "160", "date": "November 16, 2023", "time": "3:45"},
     {"blood_sugar": "140", "date": "November 16, 2023", "time": "4:03"},
     {"blood_sugar": "180", "date": "November 16, 2023", "time": "5:09"},
@@ -44,53 +45,69 @@ class _GraphState extends State<Graph> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: LineChart(
-            LineChartData(
-              lineBarsData: [
-                LineChartBarData(
-                  spots: List.generate(
-                      bloodSugarValues.length,
-                      (index) =>
-                          FlSpot(index.toDouble(), bloodSugarValues[index]!)),
-                  isCurved: true,
-                  color: Colors.blueAccent,
-                  dotData: const FlDotData(show: true),
-                  belowBarData: BarAreaData(show: false),
-                ),
-              ],
-              titlesData: FlTitlesData(
-                  leftTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                    axisNameSize: 20.0,
-                    axisNameWidget: Text('Blood Sugar Data'),
-                  ),
-                  show: true,
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 24,
-                      interval: 2.0,
-                      getTitlesWidget: (value, titleMeta) {
-                        int index = value.toInt();
-                        if (index >= 0 && index < timeValues.length) {
-                          return Text(
-                            timeValues[index],
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          );
-                        }
-                        return Container(); // Return an empty container for values outside the range
-                      },
-                    ),
-                    axisNameSize: 20.0,
-                    axisNameWidget: const Text('Time'),
-                  )),
-              // borderData: FlBorderData(show: true),
-              // gridData: const FlGridData(show: true),
+          child : SfCartesianChart(
+            primaryXAxis: CategoryAxis(),
+            primaryYAxis: NumericAxis(
+              interval: 20, // Set the interval based on your requirement
+            ),
+            series: <LineSeries<Map<String, String>, String>>[
+              LineSeries<Map<String, String>, String>(
+                dataSource: filteredData,
+                xValueMapper: (Map<String, String> entry, _) => entry['time']!,
+                yValueMapper: (Map<String, String> entry, _) =>
+                    double.parse(entry['blood_sugar']!),
+                name: 'Blood Sugar',
+              ),
+            ],
+            title: ChartTitle(
+              text: 'Blood Sugar Chart',
             ),
           ),
+          // child: LineChart(
+          //   LineChartData(
+          //     backgroundColor: Colors.transparent,
+          //     lineBarsData: [
+          //       LineChartBarData(
+          //         spots: List.generate(
+          //             bloodSugarValues.length,
+          //             (index) =>
+          //                 FlSpot(index.toDouble(), bloodSugarValues[index]!)),
+          //         isCurved: true,
+          //         color: Colors.blueAccent,
+          //         dotData: const FlDotData(show: true),
+          //       ),
+          //     ],
+          //     titlesData: FlTitlesData(
+          //         leftTitles: const AxisTitles(
+          //           sideTitles: SideTitles(showTitles: false),
+          //           axisNameSize: 20.0,
+          //           axisNameWidget: Text('Blood Sugar Data'),
+          //         ),
+          //         show: true,
+          //         bottomTitles: AxisTitles(
+          //           sideTitles: SideTitles(
+          //             showTitles: true,
+          //             reservedSize: 24,
+          //             interval: 2.0,
+          //             getTitlesWidget: (value, titleMeta) {
+          //               int index = value.toInt();
+          //               if (index >= 0 && index < timeValues.length) {
+          //                 return Text(
+          //                   timeValues[index],
+          //                   style: const TextStyle(
+          //                     color: Colors.black,
+          //                     fontSize: 12,
+          //                   ),
+          //                 );
+          //               }
+          //               return Container(); // Return an empty container for values outside the range
+          //             },
+          //           ),
+          //           axisNameSize: 20.0,
+          //           axisNameWidget: const Text('Time'),
+          //         )),
+          //   ),
+          // ),
         ),
       ),
     );
