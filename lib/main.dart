@@ -12,10 +12,11 @@ void main() async{
   await Hive.openBox('userData');
 
   runApp(
-    DevicePreview(
-      enabled: kDebugMode,
-      builder: (context) => const MyApp(),
-    ),
+    const MyApp()
+    // DevicePreview(
+    //   enabled: kDebugMode,
+    //   builder: (context) => const MyApp(),
+    // ),
   );
 }
 
@@ -31,8 +32,8 @@ class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
+      // locale: DevicePreview.locale(context),
+      // builder: DevicePreview.appBuilder,
       home: const SplashScreen(),
     );
   }
