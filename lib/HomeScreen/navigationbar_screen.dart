@@ -6,6 +6,10 @@ import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharma_trac/services/users_api.dart';
 
+import '../ChatBot/chat_bot_initial.dart';
+import '../ChatBot/chat_bot_initial_screen.dart';
+import '../ChatBot/temp_chat.dart';
+import '../Graphs/vital_sign_graph.dart';
 import '../UserProfile/user_profile_screen.dart';
 import '../VitalSigns/vital_signs.dart';
 import '../graph.dart';
@@ -72,12 +76,9 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body: <Widget>[
-        const Graph(),
+        const VitalSignGraphs(),
         const AdverseDrugReaction(),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Page 3'),
-        ),
+        const ChatScreen(),
         const VitalSigns(),
         const UserProfileScreen(),
       ][currentIndex],

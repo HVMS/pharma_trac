@@ -35,4 +35,6 @@ class ColorUtils{
 
   static final Color floatingActionButtonColor = HexColor("#16A085");
 
+  static final Color chatIconColor = HexColor('#5D8EF9');
+
 }

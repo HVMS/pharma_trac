@@ -68,4 +68,10 @@ class StringUtils{
   // Adverse Drug Reactions
   static const String addAdverseDrugReactionOptions = "Add Adverse Drug Reactions";
 
+  // Chat bot
+  static const String chatBotTitleText = 'Welcome to Pharmie';
+  static const String helloChatBotTitle = 'Hello, I am Pharmie';
+  static const String howtoHelpChatBotTitleFirst = 'I can help you with drugs information and its side effects';
+  static const String chatBotButton = 'Start chat';
+
 }
