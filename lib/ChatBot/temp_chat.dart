@@ -17,6 +17,42 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> {
   final List<ChatMessage> _messages = [];
   final TextEditingController _textController = TextEditingController();
+  bool _isTyping = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add initial bot messages when the chat screen is first loaded
+    _addBotMessages([
+      "Hi there, I am Pharmie. How are you doing today?",
+      "I can help you to find drug side effects.",
+      "Can you please tell me the drug name?",
+    ]);
+  }
+
+  void _addBotMessages(List<String> messages) {
+    _startTypingIndicator();
+    Future.delayed(const Duration(seconds: 1), () {
+      for (String message in messages) {
+        ChatMessage botMessage = ChatMessage(text: message, isUser: false);
+        setState(() {
+          _messages.add(botMessage);
+        });
+      }
+    });
+  }
+
+  void _startTypingIndicator() {
+    setState(() {
+      _isTyping = true;
+    });
+    // Stop typing indicator after a short delay (simulate typing)
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _isTyping = false;
+      });
+    });
+  }
 
   void _handleSubmitted(String text) {
     if (text != null && text.trim().isNotEmpty) {
@@ -33,6 +69,8 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _botResponse(String userMessage) {
+    _startTypingIndicator();
+
     // Simulate bot response after a short delay
     String response = 'Default bot response...';
 
@@ -57,7 +95,7 @@ class ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat Bot'),
+        title: const Text('Pharmie here'),
       ),
       body: Column(
         children: <Widget>[
@@ -75,6 +113,7 @@ class ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
+          if (_isTyping) _buildTypingIndicator(),
           const Divider(height: 1.0),
           Container(
             decoration: BoxDecoration(
@@ -109,6 +148,37 @@ class ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTypingIndicator() {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BubbleDot(),
+          BubbleDot(),
+          BubbleDot(),
+        ],
+      ),
+    );
+  }
+}
+
+class BubbleDot extends StatelessWidget {
+  const BubbleDot({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      width: 10,
+      height: 10,
+      decoration: const BoxDecoration(
+        color: Colors.grey,
+        shape: BoxShape.circle,
       ),
     );
   }
@@ -148,6 +218,9 @@ class Bubble extends StatelessWidget {
             ),
             child: Text(
               message,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              softWrap: true,
               style: const TextStyle(color: Colors.white),
             ),
           ),
