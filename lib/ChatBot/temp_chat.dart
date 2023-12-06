@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../services/medicine_api.dart';
 import 'bubble.dart';
 import 'bubble_dot.dart';
+import 'package:fuzzy/fuzzy.dart';
 
 class ChatMessage {
   final String text;
@@ -57,17 +59,43 @@ class ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  void _handleSubmitted(String text) {
-    if (text != null && text.trim().isNotEmpty) {
-      ChatMessage userMessage = ChatMessage(text: text, isUser: true);
-      setState(() {
-        _messages.add(userMessage);
-        // Clear the input field after the message is sent
-        _textController.clear();
-      });
+  Future<void> _handleSubmitted(String text) async {
+    ChatMessage userMessage = ChatMessage(text: text, isUser: true);
+    setState(() {
+      _messages.add(userMessage);
+      // Clear the input field after the message is sent
+      _textController.clear();
+    });
 
-      // Respond to the user's input
-      _botResponse(text);
+    String medicineName = await _getDrugInList(text);
+    print(medicineName);
+
+    // Respond to the user's input
+    _botResponse(text);
+  }
+
+  Future<String> _getDrugInList(String userMessage) async {
+    try {
+      // Fetch the list of medicines from the API
+      List<String> medicineList = await MedicineAPI.getMedicineList();
+      print(medicineList.length);
+
+      String userSentence = userMessage.toLowerCase();
+      final fuse = Fuzzy(medicineList, options: FuzzyOptions(findAllMatches: false, tokenize: true, threshold: 0.2));
+      final result = fuse.search(userSentence);
+
+      // Check if there are any matches
+      if (result.isNotEmpty) {
+        // Get the nearest match (the first result)
+        String nearestMatch = result[0].item;
+        return nearestMatch;
+      } else {
+        return ''; // No matching medicine found
+      }
+    } catch (e) {
+      // Handle any errors that may occur during the API call
+      debugPrint(e.toString());
+      return '';
     }
   }
 
@@ -77,8 +105,11 @@ class ChatScreenState extends State<ChatScreen> {
     // Simulate bot response after a short delay
     String response = 'Default bot response...';
 
-    if (userMessage.toLowerCase().contains('hello')) {
-      response = 'Hi there!';
+    // Define regex patterns for user greetings and well-being messages
+    RegExp wellBeingRegex = RegExp(r'hello|hi|am\s+good|doing\s+good|really\s+well|\bdoing\s+well\b|\bwell\b');
+
+    if (wellBeingRegex.hasMatch(userMessage.toLowerCase())){
+      response = 'Awesome!! Which drug did you take?';
     } else if (userMessage.toLowerCase().contains('goodbye')) {
       response = 'Goodbye!';
     } else {
@@ -138,6 +169,8 @@ class ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             Flexible(
               child: TextField(
+                autocorrect: true,
+                enableSuggestions: true,
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration: const InputDecoration.collapsed(
