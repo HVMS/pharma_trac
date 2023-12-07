@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../model/Chat/medicine_side_effects_response.dart';
 import '../services/medicine_api.dart';
 import 'bubble.dart';
 import 'bubble_dot.dart';
@@ -67,9 +68,6 @@ class ChatScreenState extends State<ChatScreen> {
       _textController.clear();
     });
 
-    String medicineName = await _getDrugInList(text);
-    print(medicineName);
-
     // Respond to the user's input
     _botResponse(text);
   }
@@ -81,7 +79,7 @@ class ChatScreenState extends State<ChatScreen> {
       print(medicineList.length);
 
       String userSentence = userMessage.toLowerCase();
-      final fuse = Fuzzy(medicineList, options: FuzzyOptions(findAllMatches: false, tokenize: true, threshold: 0.2));
+      final fuse = Fuzzy(medicineList, options: FuzzyOptions(findAllMatches: false, tokenize: true, threshold: 0.3));
       final result = fuse.search(userSentence);
 
       // Check if there are any matches
@@ -99,7 +97,7 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void _botResponse(String userMessage) {
+  Future<void> _botResponse(String userMessage) async {
     _startTypingIndicator();
 
     // Simulate bot response after a short delay
@@ -110,19 +108,26 @@ class ChatScreenState extends State<ChatScreen> {
 
     if (wellBeingRegex.hasMatch(userMessage.toLowerCase())){
       response = 'Awesome!! Which drug did you take?';
+
+      // Simulate bot response after a short delay
+      Future.delayed(const Duration(seconds: 1), () {
+        ChatMessage botMessage = ChatMessage(text: response, isUser: false);
+        setState(() {
+          _messages.add(botMessage);
+        });
+      });
+
     } else if (userMessage.toLowerCase().contains('goodbye')) {
       response = 'Goodbye!';
     } else {
       // Add more conditions based on user input
-    }
 
-    // Simulate bot response after a short delay
-    Future.delayed(const Duration(seconds: 1), () {
-      ChatMessage botMessage = ChatMessage(text: response, isUser: false);
-      setState(() {
-        _messages.add(botMessage);
-      });
-    });
+      String medicineName = await _getDrugInList(userMessage);
+      print(medicineName);
+
+      callAPIToGetSideEffects(medicineName);
+
+    }
   }
 
   @override
@@ -182,6 +187,7 @@ class ChatScreenState extends State<ChatScreen> {
               icon: const Icon(Icons.send),
               onPressed: () => _handleSubmitted(_textController.text),
             ),
+
           ],
         ),
       ),
@@ -200,5 +206,17 @@ class ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
+  }
+
+  void callAPIToGetSideEffects(String medicineName) async {
+    MedicineSideEffectsResponse medicineSideEffectsResponse = await MedicineAPI.getMedicineSideEffectsList(medicineName);
+
+    print(medicineSideEffectsResponse);
+    if (medicineSideEffectsResponse.statusCode == 200){
+      if (medicineSideEffectsResponse.data != null || medicineSideEffectsResponse.data!.isNotEmpty){
+        print(medicineSideEffectsResponse.data);
+      }
+    }
+
   }
 }
