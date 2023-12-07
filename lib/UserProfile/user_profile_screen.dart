@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,8 +29,6 @@ class _UserProfileScreen extends State<UserProfileScreen> {
 
   String imageURL = '';
   bool isUploading = false;
-
-  bool _isLoading = false;
 
   @override
   void initState() {
