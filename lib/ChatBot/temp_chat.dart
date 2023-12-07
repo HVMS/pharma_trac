@@ -125,8 +125,11 @@ class ChatScreenState extends State<ChatScreen> {
       String medicineName = await _getDrugInList(userMessage);
       print(medicineName);
 
-      callAPIToGetSideEffects(medicineName);
-
+      List<String?>? medicineSideEffectsList = await callAPIToGetSideEffects(medicineName);
+      print("data is $medicineSideEffectsList");
+      if (medicineSideEffectsList!.isNotEmpty){
+        print(medicineSideEffectsList.toList());
+      }
     }
   }
 
@@ -187,7 +190,6 @@ class ChatScreenState extends State<ChatScreen> {
               icon: const Icon(Icons.send),
               onPressed: () => _handleSubmitted(_textController.text),
             ),
-
           ],
         ),
       ),
@@ -208,15 +210,21 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void callAPIToGetSideEffects(String medicineName) async {
-    MedicineSideEffectsResponse medicineSideEffectsResponse = await MedicineAPI.getMedicineSideEffectsList(medicineName);
+  Future<List<String?>?> callAPIToGetSideEffects(String medicineName) async {
 
-    print(medicineSideEffectsResponse);
-    if (medicineSideEffectsResponse.statusCode == 200){
-      if (medicineSideEffectsResponse.data != null || medicineSideEffectsResponse.data!.isNotEmpty){
-        print(medicineSideEffectsResponse.data);
+    try {
+      List<String?>? medicineSideEffectsResponse =
+      await MedicineAPI.getMedicineSideEffectsList(medicineName);
+
+      if (medicineSideEffectsResponse!.isNotEmpty) {
+        return medicineSideEffectsResponse;
       }
-    }
 
+      return [];
+    } catch (e) {
+      // Handle any errors that may occur during the API call
+      print('Error during API call: $e');
+      return [];
+    }
   }
 }

@@ -40,7 +40,7 @@ class MedicineAPI{
 
   }
 
-  static Future<dynamic> getMedicineSideEffectsList(String medicineName) async {
+  static Future<List<String?>?> getMedicineSideEffectsList(String medicineName) async {
     Map<String, String> requestHeaders = {
       'content-type': 'application/json',
     };
@@ -58,10 +58,9 @@ class MedicineAPI{
         var data = jsonDecode(response.body);
 
         MedicineSideEffectsResponse medicineSideEffectsResponse = MedicineSideEffectsResponse.fromJson(data);
-        print(medicineSideEffectsResponse);
-        print(medicineSideEffectsResponse.data);
 
-        return medicineSideEffectsResponse;
+        return medicineSideEffectsResponse.data;
+
       } else {
         throw Exception('Something went wrong');
       }
