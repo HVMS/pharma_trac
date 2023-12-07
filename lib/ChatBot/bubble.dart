@@ -35,7 +35,7 @@ class Bubble extends StatelessWidget {
             child: Text(
               message,
               overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+              maxLines: null,
               softWrap: true,
               style: const TextStyle(color: Colors.white),
             ),
