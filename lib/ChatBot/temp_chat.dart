@@ -38,7 +38,7 @@ class ChatScreenState extends State<ChatScreen> {
 
   void _addBotMessages(List<String> messages) {
     _startTypingIndicator();
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 2), () {
       for (String message in messages) {
         ChatMessage botMessage = ChatMessage(text: message, isUser: false);
         setState(() {
@@ -53,11 +53,19 @@ class ChatScreenState extends State<ChatScreen> {
       _isTyping = true;
     });
     // Stop typing indicator after a short delay (simulate typing)
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _isTyping = false;
       });
     });
+  }
+
+  String _formatSideEffects(List<String?> sideEffects) {
+    String formattedMessage = '';
+    for (var i = 0; i < sideEffects.length; i++) {
+      formattedMessage += '${i + 1}. ${sideEffects[i]}\n';
+    }
+    return formattedMessage;
   }
 
   Future<void> _handleSubmitted(String text) async {
@@ -79,7 +87,9 @@ class ChatScreenState extends State<ChatScreen> {
       print(medicineList.length);
 
       String userSentence = userMessage.toLowerCase();
-      final fuse = Fuzzy(medicineList, options: FuzzyOptions(findAllMatches: false, tokenize: true, threshold: 0.3));
+      final fuse = Fuzzy(medicineList,
+          options: FuzzyOptions(
+              findAllMatches: false, tokenize: true, threshold: 0.3));
       final result = fuse.search(userSentence);
 
       // Check if there are any matches
@@ -104,32 +114,69 @@ class ChatScreenState extends State<ChatScreen> {
     String response = 'Default bot response...';
 
     // Define regex patterns for user greetings and well-being messages
-    RegExp wellBeingRegex = RegExp(r'hello|hi|am\s+good|doing\s+good|really\s+well|\bdoing\s+well\b|\bwell\b');
+    RegExp wellBeingRegex = RegExp(
+        r'hello|hi|am\s+good|doing\s+good|really\s+well|\bdoing\s+well\b|\bwell\b');
 
-    if (wellBeingRegex.hasMatch(userMessage.toLowerCase())){
+    if (wellBeingRegex.hasMatch(userMessage.toLowerCase())) {
+      _startTypingIndicator();
       response = 'Awesome!! Which drug did you take?';
 
       // Simulate bot response after a short delay
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 2), () {
         ChatMessage botMessage = ChatMessage(text: response, isUser: false);
         setState(() {
           _messages.add(botMessage);
         });
       });
-
     } else if (userMessage.toLowerCase().contains('goodbye')) {
+      _startTypingIndicator();
       response = 'Goodbye!';
+
+      // Simulate bot response after a short delay
+      Future.delayed(const Duration(seconds: 2), () {
+        ChatMessage botMessage = ChatMessage(text: response, isUser: false);
+        setState(() {
+          _messages.add(botMessage);
+        });
+      });
     } else {
+      _startTypingIndicator();
       // Add more conditions based on user input
 
       String medicineName = await _getDrugInList(userMessage);
       print(medicineName);
 
-      List<String?>? medicineSideEffectsList = await callAPIToGetSideEffects(medicineName);
+      List<String?>? medicineSideEffectsList =
+          await callAPIToGetSideEffects(medicineName);
       print("data is $medicineSideEffectsList");
-      if (medicineSideEffectsList!.isNotEmpty){
+      if (medicineSideEffectsList!.isNotEmpty) {
+
         print(medicineSideEffectsList.toList());
+
+        String sideEffectsMessage = "Here are the known side effects of $medicineName:\n" +
+            "${_formatSideEffects(medicineSideEffectsList.toList())}";
+
+        // Simulate bot response after a short delay
+        Future.delayed(const Duration(seconds: 2), () {
+          ChatMessage botMessage =
+          ChatMessage(text: sideEffectsMessage, isUser: false);
+          setState(() {
+            _messages.add(botMessage);
+          });
+        });
+
+      } else {
+        String noSideEffectsMessage = "Apologies, there is no side effects of $medicineName.";
+        Future.delayed(const Duration(seconds: 2), () {
+          ChatMessage botMessage =
+          ChatMessage(text: noSideEffectsMessage, isUser: false);
+          setState(() {
+            _messages.add(botMessage);
+          });
+        });
       }
+
+
     }
   }
 
@@ -177,12 +224,14 @@ class ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             Flexible(
               child: TextField(
+                cursorColor: Colors.blueAccent,
+                maxLines: 2,
                 autocorrect: true,
                 enableSuggestions: true,
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration: const InputDecoration.collapsed(
-                  hintText: 'Send a message',
+                  hintText: 'Start chat here ...',
                 ),
               ),
             ),
@@ -211,10 +260,9 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Future<List<String?>?> callAPIToGetSideEffects(String medicineName) async {
-
     try {
       List<String?>? medicineSideEffectsResponse =
-      await MedicineAPI.getMedicineSideEffectsList(medicineName);
+          await MedicineAPI.getMedicineSideEffectsList(medicineName);
 
       if (medicineSideEffectsResponse!.isNotEmpty) {
         return medicineSideEffectsResponse;
