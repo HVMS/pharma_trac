@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharma_trac/services/users_api.dart';
 
 import '../ChatBot/temp_chat.dart';
-import '../Graphs/vital_sign_graph.dart';
+import '../Analytics/vital_sign_graph.dart';
 import '../UserProfile/user_profile_screen.dart';
 import '../VitalSigns/vital_signs.dart';
 import '../model/User/UserInformation.dart';
