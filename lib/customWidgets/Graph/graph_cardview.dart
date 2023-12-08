@@ -16,7 +16,7 @@ class CustomGraphCardView extends StatelessWidget {
         onTap: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TopNavigationBar(keyValueVitalSign: title.toString()),
+              MaterialPageRoute(builder: (context) => TopNavigationBar(vitalSignTitle: title.toString()),
             )
           );
         },

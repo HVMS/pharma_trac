@@ -104,7 +104,21 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
   Future<void> callVitalSignDataYearWise(int selectedYear) async {
     if (widget.vitalSignTitle == 'Blood Pressure') {
       List<String> value = await getBloodPressureDataByYear(selectedYear);
-      print(value);
+      if (value.isNotEmpty){
+        double systolicValue = double.parse(value[0]);
+        print(systolicValue);
+        double diastolicValue = double.parse(value[1]);
+        print(diastolicValue);
+        chartData.clear();
+        chartData.add(ChartData('systolic\nValue', systolicValue, blueColor));
+        chartData.add(ChartData('Lowest\nsystolic', 120.0, greenColor));
+        chartData.add(ChartData('Highest\nsystolic', 180.0, redColor));
+        chartData.add(ChartData('diastolic\nValue', diastolicValue, blueColor));
+        chartData.add(ChartData('Lowest\ndiastolic', 80.0, greenColor));
+        chartData.add(ChartData('Highest\ndiastolic', 120.0, redColor));
+      } else {
+        chartData.clear();
+      }
     } else if (widget.vitalSignTitle == 'Blood Sugar') {
       double value = await getBloodSugarDataByYear(selectedYear);
       if (value > 0.0) {

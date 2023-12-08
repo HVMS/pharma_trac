@@ -4,9 +4,9 @@ import '../Utils/styleUtils.dart';
 
 class TopNavigationBar extends StatefulWidget {
 
-  final String keyValueVitalSign;
+  final String vitalSignTitle;
 
-  const TopNavigationBar({super.key, required this.keyValueVitalSign});
+  const TopNavigationBar({super.key, required this.vitalSignTitle});
 
   @override
   State<TopNavigationBar> createState() => _TopNavigationBarState();
@@ -20,7 +20,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Graph Visualization',
+            '${widget.vitalSignTitle} Graph',
             style: StyleUtils.appBarTextStyle(),
           ),
           leading: IconButton(
@@ -56,7 +56,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
           const Center(
             child: Text("It's monthly here"),
           ),
-          YearPickerGraph(vitalSignTitle: widget.keyValueVitalSign)
+          YearPickerGraph(vitalSignTitle: widget.vitalSignTitle)
         ]),
       ),
     );

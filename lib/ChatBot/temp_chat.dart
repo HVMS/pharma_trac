@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../model/Chat/medicine_side_effects_response.dart';
 import '../services/medicine_api.dart';
 import 'bubble.dart';
 import 'bubble_dot.dart';
