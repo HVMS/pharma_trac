@@ -87,7 +87,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
                 } else {
                   return Expanded(
                     child: chartData != null && chartData.isNotEmpty
-                        ? YearWiseGraph(data: chartData)
+                        ? YearWiseGraph(data: chartData, vitalSignText: widget.vitalSignTitle)
                         : Center(
                           child: Text('No Data Available!!', style: StyleUtils.robotoLightTextStyle()),
                         ), // Return an empty container if chartData is null or empty

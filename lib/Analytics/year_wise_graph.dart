@@ -4,8 +4,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class YearWiseGraph extends StatefulWidget {
 
   final List<ChartData> data;
-
-  const YearWiseGraph({super.key, required this.data});
+  final String vitalSignText;
+  const YearWiseGraph({super.key, required this.data, required this.vitalSignText});
 
   @override
   State<YearWiseGraph> createState() => _YearWiseGraph();
@@ -34,7 +34,7 @@ class _YearWiseGraph extends State<YearWiseGraph> {
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,
           pointColorMapper: (ChartData data, _) => data.color,
-          name: 'Blood Pressure',
+          name: widget.vitalSignText,
           color: const Color.fromRGBO(8, 142, 255, 1))
     ]);
   }
