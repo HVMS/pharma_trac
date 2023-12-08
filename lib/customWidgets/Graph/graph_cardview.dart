@@ -15,8 +15,9 @@ class CustomGraphCardView extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TopNavigationBar()),
+              context,
+              MaterialPageRoute(builder: (context) => TopNavigationBar(keyValueVitalSign: title.toString()),
+            )
           );
         },
         child: Card(

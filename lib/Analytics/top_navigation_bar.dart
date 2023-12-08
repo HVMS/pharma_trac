@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_trac/Analytics/year_picker_graph.dart';
 import '../Utils/styleUtils.dart';
+import 'graph_sample_year_wise.dart';
 
 class TopNavigationBar extends StatefulWidget {
-  const TopNavigationBar({super.key});
+
+  final String keyValueVitalSign;
+
+  const TopNavigationBar({super.key, required this.keyValueVitalSign});
 
   @override
   State<TopNavigationBar> createState() => _TopNavigationBarState();
@@ -13,7 +17,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -40,20 +44,24 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
               Tab(
                 child: Text('Yearly'),
               ),
+              Tab(
+                child: Text('Graph Sample'),
+              )
             ],
           ),
         ),
-        body: const TabBarView(children: <Widget>[
-          Center(
+        body: TabBarView(children: [
+          const Center(
             child: Text("It's daily here"),
           ),
-          Center(
+          const Center(
             child: Text("It's weekly here"),
           ),
-          Center(
+          const Center(
             child: Text("It's monthly here"),
           ),
-          YearPickerGraph(),
+          YearPickerGraph(vitalSignTitle: widget.keyValueVitalSign),
+          const GraphSampleYearWise(),
         ]),
       ),
     );
