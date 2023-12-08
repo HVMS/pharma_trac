@@ -17,7 +17,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -44,9 +44,6 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
               Tab(
                 child: Text('Yearly'),
               ),
-              Tab(
-                child: Text('Graph Sample'),
-              )
             ],
           ),
         ),
@@ -60,8 +57,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
           const Center(
             child: Text("It's monthly here"),
           ),
-          YearPickerGraph(vitalSignTitle: widget.keyValueVitalSign),
-          const GraphSampleYearWise(),
+          YearPickerGraph(vitalSignTitle: widget.keyValueVitalSign)
         ]),
       ),
     );
