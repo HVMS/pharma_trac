@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharma_trac/Analytics/year_picker_graph.dart';
 import '../Utils/styleUtils.dart';
 
 class TopNavigationBar extends StatefulWidget {
@@ -42,6 +43,18 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
             ],
           ),
         ),
+        body: const TabBarView(children: <Widget>[
+          Center(
+            child: Text("It's daily here"),
+          ),
+          Center(
+            child: Text("It's weekly here"),
+          ),
+          Center(
+            child: Text("It's monthly here"),
+          ),
+          YearPickerGraph(),
+        ]),
       ),
     );
   }
