@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     return 'Invalid email format';
                                   }
                                 }),
-                            const SizedBox(height: 20.0),
+                            const SizedBox(height: 15.0),
                             Text(
                               StringUtils.password,
                               textAlign: TextAlign.center,
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Now store user information
       late Box box;
-      box = await Hive.openBox('userData');
+      box = await Hive.openBox('userDataBox');
       box.put('email_address', user.email.toString());
       box.put('fullName', user.displayName.toString());
       box.put('_id', user.id.toString());
@@ -296,11 +296,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // Store the userInformation data into Hive
           late Box box;
-          box = await Hive.openBox('userInformation');
-          box.put('userInformation', userResponse);
+          box = await Hive.openBox('userDataBox');
+          box.put("_id", userResponse.Id);
+          box.put("email_address", userResponse.emailAddress);
+          box.put("fullName", userResponse.fullName);
+          box.put("birthDate", userResponse.birthDate);
+          box.put("gender", userResponse.gender);
+          box.put("country", userResponse.country);
+          box.put("height", userResponse.height);
+          box.put("weight", userResponse.weight);
 
           print(userResponse.toString());
-          print("hive data ==> ${box.get('userInformation')}");
+          print("hive data ==> ${box.get('_id')}");
+          print("hive data ==> ${box.get('email_address')}");
+          print("hive data ==> ${box.get('fullName')}");
+          print("hive data ==> ${box.get('birthDate')}");
+          print("hive data ==> ${box.get('gender')}");
+          print("hive data ==> ${box.get('country')}");
+          print("hive data ==> ${box.get('height')}");
+          print("hive data ==> ${box.get('weight')}");
 
           Fluttertoast.showToast(
             msg: successMessage,

@@ -73,5 +73,6 @@ class StringUtils{
   static const String helloChatBotTitle = 'Hello, I am Pharmie';
   static const String howtoHelpChatBotTitleFirst = 'I can help you with drugs information and its side effects';
   static const String chatBotButton = 'Start chat';
+  static const String voice = "Voice";
 
 }

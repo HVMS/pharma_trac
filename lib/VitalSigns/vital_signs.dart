@@ -24,7 +24,7 @@ class _VitalSignsState extends State<VitalSigns> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    userDataBox = Hive.box('userData');
+    userDataBox = Hive.box('userDataBox');
   }
 
   @override

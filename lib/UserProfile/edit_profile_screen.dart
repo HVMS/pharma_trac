@@ -21,7 +21,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    userDataBox = Hive.box('userData');
+    userDataBox = Hive.box('userDataBox');
 
     // String dateString = "November 15, 2023";
     // DateFormat dateFormat = DateFormat("MMMM d, yyyy");

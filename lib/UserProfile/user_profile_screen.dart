@@ -34,7 +34,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    userDataBox = Hive.box('userData');
+    userDataBox = Hive.box('userDataBox');
     userId = userDataBox.get("_id", defaultValue: '');
     imageURL = userDataBox.get('photoUrl', defaultValue: '');
   }

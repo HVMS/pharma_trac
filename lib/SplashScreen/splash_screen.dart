@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:pharma_trac/HomeScreen/home_screen.dart';
 import 'package:pharma_trac/LoginAndRegistration/login_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
@@ -92,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   bool checkWhetherUserIsLoggedInOrNot() {
     // TODO: implement checkWhetherUserIsLoggedInOrNot
-    userDataBox = Hive.box('userData');
+    userDataBox = Hive.box('userDataBox');
     print(userDataBox);
     String _emailAddress = userDataBox.get('email_address', defaultValue: '');
     print(_emailAddress);
