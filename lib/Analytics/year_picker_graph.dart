@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:pharma_trac/VitalSigns/blood_cholesterol.dart';
 import 'package:pharma_trac/model/VitalSign/blood_cholesterol_model.dart';
 import 'package:pharma_trac/model/VitalSign/body_temperature_model.dart';
 import 'package:pharma_trac/model/VitalSign/heart_rate_model.dart';
@@ -10,7 +9,7 @@ import '../Utils/styleUtils.dart';
 import '../model/VitalSign/blood_pressure_model.dart';
 import '../model/VitalSign/blood_sugar_model.dart';
 import '../services/vital_signs_api.dart';
-import 'graph_sample_year_wise.dart';
+import 'year_wise_graph.dart';
 
 class YearPickerGraph extends StatefulWidget {
   final String vitalSignTitle;
@@ -88,7 +87,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
                 } else {
                   return Expanded(
                     child: chartData != null && chartData.isNotEmpty
-                        ? GraphSampleYearWise(data: chartData)
+                        ? YearWiseGraph(data: chartData)
                         : Center(
                           child: Text('No Data Available!!', style: StyleUtils.robotoLightTextStyle()),
                         ), // Return an empty container if chartData is null or empty
@@ -187,19 +186,15 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
 
           double sumOfHeartRate = 0.0;
 
-          if (filteredData == null || filteredData.isEmpty) {
-            return averageOfHeartRate;
-          } else {
-            filteredData.forEach((element) {
-              sumOfHeartRate += double.parse(element.heartRate);
-            });
-
-            averageOfHeartRate = averageOfHeartRate + sumOfHeartRate / filteredData.length;
-
-            print("Average heart rate : $averageOfHeartRate");
-
-            return averageOfHeartRate;
+          for (var element in filteredData) {
+            sumOfHeartRate += double.parse(element.heartRate);
           }
+
+          averageOfHeartRate = averageOfHeartRate + sumOfHeartRate / filteredData.length;
+
+          print("Average heart rate : $averageOfHeartRate");
+
+          return averageOfHeartRate;
         }
       } else {
         print("Response is null!!");
@@ -239,19 +234,14 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
 
           double sumOfBloodCholesterol = 0.0;
 
-          if (filteredData == null || filteredData.isEmpty) {
-            return averageOfBloodCholesterol;
-          } else {
-
-            filteredData.forEach((element) {
-              sumOfBloodCholesterol += double.parse(element.bloodCholesterol);
-            });
-
-            averageOfBloodCholesterol += sumOfBloodCholesterol / filteredData.length;
-            print("Average blood cholesterol: $averageOfBloodCholesterol");
-
-            return averageOfBloodCholesterol;
+          for (var element in filteredData) {
+            sumOfBloodCholesterol += double.parse(element.bloodCholesterol);
           }
+
+          averageOfBloodCholesterol += sumOfBloodCholesterol / filteredData.length;
+          print("Average blood cholesterol: $averageOfBloodCholesterol");
+
+          return averageOfBloodCholesterol;
         }
       } else {
         print("Response is null!!");
@@ -259,6 +249,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
       return averageOfBloodCholesterol;
     } on Exception catch (e) {
       // TODO
+      print(e);
       rethrow;
     }
   }
@@ -288,19 +279,15 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
 
           double sumOfBodyTemperature = 0.0;
 
-          if (filteredData == null || filteredData.isEmpty) {
-            return averageOfBodyTemperature;
-          } else {
-            filteredData.forEach((element) {
-              sumOfBodyTemperature += double.parse(element.temperature);
-            });
-
-            averageOfBodyTemperature += sumOfBodyTemperature / filteredData.length;
-
-            print("Average body temperature: $averageOfBodyTemperature");
-
-            return averageOfBodyTemperature;
+          for (var element in filteredData) {
+            sumOfBodyTemperature += double.parse(element.temperature);
           }
+
+          averageOfBodyTemperature += sumOfBodyTemperature / filteredData.length;
+
+          print("Average body temperature: $averageOfBodyTemperature");
+
+          return averageOfBodyTemperature;
         }
       } else {
         print("Response is null!!");
@@ -308,6 +295,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
       return averageOfBodyTemperature;
     } on Exception catch (e) {
       // TODO
+      print(e);
       rethrow;
     }
   }
@@ -336,17 +324,13 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
 
           double sumOfBloodSugar = 0.0;
 
-          if (filteredData == null || filteredData.isEmpty) {
-            return averageOfBloodSugar;
-          } else {
-            filteredData.forEach((element) {
-              sumOfBloodSugar += double.parse(element.bloodSugar);
-            });
-            averageOfBloodSugar += sumOfBloodSugar / filteredData.length;
-            print("Average blood sugar: $averageOfBloodSugar");
-
-            return averageOfBloodSugar;
+          for (var element in filteredData) {
+            sumOfBloodSugar += double.parse(element.bloodSugar);
           }
+          averageOfBloodSugar += sumOfBloodSugar / filteredData.length;
+          print("Average blood sugar: $averageOfBloodSugar");
+
+          return averageOfBloodSugar;
         }
       } else {
         print("Response is null!!");
@@ -354,6 +338,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
       return averageOfBloodSugar;
     } on Exception catch (e) {
       // TODO
+      print(e);
       rethrow;
     }
   }
@@ -385,11 +370,11 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
           if (filteredData == null || filteredData.isEmpty) {
             print("No data available");
           } else {
-            filteredData.forEach((element) {
+            for (var element in filteredData) {
               List<String> values = element.bloodPressure!.split('/');
               sumBeforeSlash += double.parse(values[0]);
               sumAfterSlash += double.parse(values[1]);
-            });
+            }
 
             double averageBeforeSlash = sumBeforeSlash / filteredData.length;
             double averageAfterSlash = sumAfterSlash / filteredData.length;
@@ -411,6 +396,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
       return [];
     } on Exception catch (e) {
       // TODO
+      print(e);
       rethrow;
     }
   }

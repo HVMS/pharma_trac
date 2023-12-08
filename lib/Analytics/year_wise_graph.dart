@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class GraphSampleYearWise extends StatefulWidget {
+class YearWiseGraph extends StatefulWidget {
 
   final List<ChartData> data;
 
-  const GraphSampleYearWise({super.key, required this.data});
+  const YearWiseGraph({super.key, required this.data});
 
   @override
-  State<GraphSampleYearWise> createState() => _GraphSampleYearWise();
+  State<YearWiseGraph> createState() => _YearWiseGraph();
 }
 
-class _GraphSampleYearWise extends State<GraphSampleYearWise> {
+class _YearWiseGraph extends State<YearWiseGraph> {
   late List<ChartData> data = [];
   late TooltipBehavior _tooltip;
 
