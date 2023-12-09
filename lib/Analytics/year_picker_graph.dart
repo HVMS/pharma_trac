@@ -36,6 +36,7 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
     userDataBox = Hive.box('userData');
     userId = userDataBox.get("_id", defaultValue: '');
     callVitalSignDataYearWise(selectedYear);
+
     super.initState();
   }
 
@@ -80,10 +81,12 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
               future: callVitalSignDataYearWise(selectedYear),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator(); // Show a loading spinner while waiting for data
+                  // Show a loading spinner while waiting for data
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text(
-                      'Error: ${snapshot.error}'); // Show error message if something went wrong
+                    // Show error message if something went wrong
+                      'Error: ${snapshot.error}');
                 } else {
                   return Expanded(
                     child: chartData != null && chartData.isNotEmpty
@@ -410,6 +413,8 @@ class _YearPickerGraphState extends State<YearPickerGraph> {
       return [];
     } on Exception catch (e) {
       // TODO
+
+
       print(e);
       rethrow;
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_trac/Analytics/year_picker_graph.dart';
 import '../Utils/styleUtils.dart';
+import 'date_picker_graph.dart';
 
 class TopNavigationBar extends StatefulWidget {
 
@@ -47,9 +48,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
           ),
         ),
         body: TabBarView(children: [
-          const Center(
-            child: Text("It's daily here"),
-          ),
+          DatePickerGraph(vitalSignTitle: widget.vitalSignTitle),
           const Center(
             child: Text("It's weekly here"),
           ),
