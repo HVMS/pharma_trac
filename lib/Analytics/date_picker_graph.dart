@@ -28,7 +28,6 @@ class _DatePickerGraphState extends State<DatePickerGraph> {
     // TODO: implement initState
     userDataBox = Hive.box('userData');
     userId = userDataBox.get("_id", defaultValue: '');
-
     callAPIVitalSignDateWise(currentDate);
     super.initState();
   }
@@ -50,6 +49,8 @@ class _DatePickerGraphState extends State<DatePickerGraph> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
                     selectPreviousDate();
+                    print(currentDate);
+                    callAPIVitalSignDateWise(currentDate);
                   },
                 ),
                 Text(
@@ -160,22 +161,13 @@ class _DatePickerGraphState extends State<DatePickerGraph> {
           List<BloodPressureModelResponse> filteredData = responseData
               .whereType<BloodPressureModelResponse>()
               .where((element) {
-            DateFormat timeFormat = DateFormat("h:mm a");
-
-            DateTime currentDate = DateTime.now();
-
-            DateTime currentTime =
-                timeFormat.parse(DateFormat('h:mm a').format(currentDate));
-            DateTime elementTime = timeFormat.parse(element.time!);
-
             DateTime elementDate = dateFormat.parse(element.date!);
             DateTime elementDateYMD =
                 DateTime(elementDate.year, elementDate.month, elementDate.day);
             DateTime currentDateYMD =
                 DateTime(currentDate.year, currentDate.month, currentDate.day);
 
-            return elementDateYMD == currentDateYMD &&
-                elementTime.isBefore(currentTime);
+            return elementDateYMD == currentDateYMD;
           }).toList();
 
           if (filteredData == null || filteredData.isEmpty) {

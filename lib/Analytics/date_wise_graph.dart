@@ -28,6 +28,10 @@ class _DateTimeCategoryLabelState extends State<DateTimeCategoryLabel> {
   Widget build(BuildContext context) {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
+      zoomPanBehavior: ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+      ),
       primaryXAxis: DateTimeAxis(
         majorGridLines: const MajorGridLines(width: 0),
         dateFormat: DateFormat('h a'),
