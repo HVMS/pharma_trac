@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharma_trac/Analytics/month_picker_graph.dart';
 import 'package:pharma_trac/Analytics/year_picker_graph.dart';
 import '../Utils/styleUtils.dart';
 import 'date_picker_graph.dart';
@@ -52,9 +53,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
           const Center(
             child: Text("It's weekly here"),
           ),
-          const Center(
-            child: Text("It's monthly here"),
-          ),
+          MonthPickerGraph(vitalSignTitle: widget.vitalSignTitle),
           YearPickerGraph(vitalSignTitle: widget.vitalSignTitle)
         ]),
       ),
