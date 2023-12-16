@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_trac/Analytics/month_picker_graph.dart';
+import 'package:pharma_trac/Analytics/week_picker_graph.dart';
 import 'package:pharma_trac/Analytics/year_picker_graph.dart';
+import 'package:pharma_trac/ChatBot/chat_bot_initial.dart';
 import '../Utils/styleUtils.dart';
 import 'date_picker_graph.dart';
 
@@ -18,7 +20,7 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -36,9 +38,9 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
               Tab(
                 child: Text('Daily'),
               ),
-              Tab(
-                child: Text('Weekly'),
-              ),
+              // Tab(
+              //   child: Text('Weekly'),
+              // ),
               Tab(
                 child: Text('Monthly'),
               ),
@@ -50,9 +52,9 @@ class _TopNavigationBarState extends State<TopNavigationBar> {
         ),
         body: TabBarView(children: [
           DatePickerGraph(vitalSignTitle: widget.vitalSignTitle),
-          const Center(
-            child: Text("It's weekly here"),
-          ),
+          // const Center(
+          //   child: Text("It's weekly here"),
+          // ),
           MonthPickerGraph(vitalSignTitle: widget.vitalSignTitle),
           YearPickerGraph(vitalSignTitle: widget.vitalSignTitle)
         ]),

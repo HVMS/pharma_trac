@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kommunicate_flutter/kommunicate_flutter.dart';
+import 'package:pharma_trac/ChatBot/temp_chat.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
@@ -52,18 +52,12 @@ class ChatBotInitialScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              onPressed: () async {
-                dynamic conversationObject = {
-                  'appId':
-                  '333e636f57fd928adbb401455aa821a60', // The [APP_ID](https://dashboard.kommunicate.io/settings/install) obtained from kommunicate dashboard.
-                };
-
-                KommunicateFlutterPlugin.buildConversation(conversationObject)
-                    .then((clientConversationId) {
-                  print("Conversation builder success : $clientConversationId");
-                }).catchError((error) {
-                  print("Conversation builder error : $error");
-                });
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const ChatScreen(),
+                  ),
+                );
               },
               child: Text(
                 StringUtils.chatBotButton,

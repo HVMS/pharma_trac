@@ -4,6 +4,8 @@ import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:pharma_trac/customWidgets/CustomEditProfileRow.dart';
 import '../Utils/styleUtils.dart';
 import '../customWidgets/CustomGreyDivider.dart';
+import '../model/User/UserInformation.dart';
+import '../services/users_api.dart';
 
 class EditProfileScreen extends StatefulWidget {
 

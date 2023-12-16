@@ -6,7 +6,7 @@ import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharma_trac/services/users_api.dart';
 
-import '../ChatBot/temp_chat.dart';
+import '../ChatBot/chat_bot_initial.dart';
 import '../Analytics/vital_sign_graph.dart';
 import '../UserProfile/user_profile_screen.dart';
 import '../VitalSigns/vital_signs.dart';
@@ -75,7 +75,7 @@ class _NavigationExampleState extends State<NavigationExample> {
       body: <Widget>[
         const VitalSignGraphs(),
         const AdverseDrugReaction(),
-        const ChatScreen(),
+        const ChatBotInitialScreen(),
         const VitalSigns(),
         const UserProfileScreen(),
       ][currentIndex],

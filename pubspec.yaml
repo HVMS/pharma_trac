@@ -44,6 +44,7 @@ dependencies:
   syncfusion_flutter_charts: ^22.2.12
   kommunicate_flutter: ^1.7.9
   fuzzy: ^0.5.1
+  bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:

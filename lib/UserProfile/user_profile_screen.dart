@@ -11,6 +11,7 @@ import 'package:pharma_trac/UserProfile/edit_profile_screen.dart';
 import 'package:pharma_trac/Utils/colors_utils.dart';
 import 'package:pharma_trac/Utils/string_utils.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pharma_trac/model/User/UserInformation.dart';
 import 'package:pharma_trac/services/users_api.dart';
 
 import '../Utils/styleUtils.dart';
@@ -29,6 +30,8 @@ class _UserProfileScreen extends State<UserProfileScreen> {
 
   String imageURL = '';
   bool isUploading = false;
+
+  UserInformationUser userInformationUser = UserInformationUser();
 
   @override
   void initState() {
@@ -85,17 +88,31 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                       ],
                     ),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        userDataBox.get('fullName', defaultValue: ''),
-                        style: StyleUtils.robotoTextStyle(),
-                      ),
-                      Text(
-                        userDataBox.get('email_address', defaultValue: ''),
-                        style: StyleUtils.robotoTextStyle(),
-                      ),
-                    ],
+                  FutureBuilder(
+                    future: callApiToGetUserInformation(userId),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Show a loading indicator while data is being fetched
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        // Handle errors
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        // Data is available, display it
+                        return Column(
+                          children: [
+                            Text(
+                              userInformationUser.fullName.toString(),
+                              style: StyleUtils.robotoTextStyle(),
+                            ),
+                            Text(
+                              userInformationUser.emailAddress.toString(),
+                              style: StyleUtils.robotoTextStyle(),
+                            ),
+                          ],
+                        );
+                      }
+                    },
                   ),
                   IconButton(
                     icon: SvgPicture.asset('Icons/edit_icon.svg'),
@@ -186,7 +203,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
     ValueNotifier<bool> hasLetter = ValueNotifier<bool>(false);
     ValueNotifier<bool> passwordsMatch = ValueNotifier<bool>(false);
 
-    bool _isPasswordMatched = false;
+    bool isPasswordMatched = false;
 
     bool passwordVisible = false;
     bool confirmVisible = false;
@@ -243,7 +260,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                   obscureText: !passwordVisible,
                   onChanged: (value) {
                     setState(() {
-                      _isPasswordMatched =
+                      isPasswordMatched =
                           passwordController.text == confirmController.text;
                     });
                   },
@@ -287,7 +304,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                   obscureText: !confirmVisible,
                   onChanged: (value) {
                     setState(() {
-                      _isPasswordMatched =
+                      isPasswordMatched =
                           passwordController.text == confirmController.text;
                     });
                   },
@@ -330,7 +347,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  onPressed: _isPasswordMatched &&
+                  onPressed: isPasswordMatched &&
                           hasDigit.value &&
                           hasEightCharacters.value &&
                           hasLetter.value
@@ -452,4 +469,20 @@ class _UserProfileScreen extends State<UserProfileScreen> {
       print("Sign out failed");
     }
   }
+
+  Future<void> callApiToGetUserInformation(String userId) async {
+    try {
+      UserInformation userData = await UsersAPI.getUserInformation(userId);
+
+      if (userData.user != null){
+        userInformationUser = userData.user!;
+      }
+
+    } on Exception catch (e) {
+      // TODO
+      print(e);
+      throw Exception('Error is here');
+    }
+  }
+
 }

@@ -23,6 +23,7 @@ class _HeartRateSignState extends State<HeartRateSign> {
 
   late Box userDataBox;
   String userId = '';
+
   String heartRateValue = '';
 
   @override
