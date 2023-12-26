@@ -40,7 +40,12 @@ class CustomEditProfileRow extends StatelessWidget {
               context: context,
               builder: (context) {
                 return EditProfileBottomSheetBar(
-                    titleValue: title, responseValue: value);
+                  titleValue: title,
+                  responseValue: value,
+                  onUpdate: (updatedUser) {
+                    // Update the local state with the new user information
+                  },
+                );
               },
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),

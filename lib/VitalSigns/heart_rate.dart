@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
@@ -20,7 +19,6 @@ class HeartRateSign extends StatefulWidget {
 }
 
 class _HeartRateSignState extends State<HeartRateSign> {
-
   late Box userDataBox;
   String userId = '';
 
@@ -106,7 +104,7 @@ class _HeartRateSignState extends State<HeartRateSign> {
     print(userId);
 
     HeartRateModel bloodPressureModelResponse =
-    await VitalSignsService.getHeartRate(userId);
+        await VitalSignsService.getHeartRate(userId);
 
     if (bloodPressureModelResponse.statusCode == 200) {
       List<HeartRateModelResponse?>? responseData =
@@ -119,12 +117,12 @@ class _HeartRateSignState extends State<HeartRateSign> {
 
         // Filter the response data
         List<HeartRateModelResponse?> filteredDataNullable =
-        responseData.where((entry) {
+            responseData.where((entry) {
           // Check if entry is null
           if (entry != null) {
             DateFormat format = DateFormat("MMMM d, yyyy h:mm a");
             DateTime entryDateTime =
-            format.parse("${entry.date} ${entry.time}");
+                format.parse("${entry.date} ${entry.time}");
             return entryDateTime.isBefore(now);
           } else {
             return false;
@@ -152,5 +150,4 @@ class _HeartRateSignState extends State<HeartRateSign> {
       });
     }
   }
-
 }

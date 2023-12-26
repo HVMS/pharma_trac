@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 
 import '../Utils/colors_utils.dart';
 import '../Utils/string_utils.dart';
+import '../model/User/UserInformation.dart';
 import '../model/User/update_user_response.dart';
 import '../services/users_api.dart';
 import 'CustomGreyDivider.dart';
@@ -12,9 +13,14 @@ import 'CustomGreyDivider.dart';
 class EditProfileBottomSheetBar extends StatefulWidget {
   final String titleValue;
   final String responseValue;
+  final Function(UserInformationUser) onUpdate;
 
-  const EditProfileBottomSheetBar(
-      {super.key, required this.titleValue, required this.responseValue});
+  const EditProfileBottomSheetBar({
+    Key? key,
+    required this.titleValue,
+    required this.responseValue,
+    required this.onUpdate,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EditProfileBottomSheetBar();

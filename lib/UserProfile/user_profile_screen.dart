@@ -120,7 +120,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const EditProfileScreen()));
+                              builder: (context) => EditProfileScreen(userInformationUser)));
                     },
                   ),
                 ],
@@ -426,6 +426,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
       final url = await ref.getDownloadURL();
 
       setState(() {
+        userDataBox.put('photoUrl', url);
         imageURL = url;
         isUploading = false;
       });
